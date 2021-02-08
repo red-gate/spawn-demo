@@ -1,0 +1,7 @@
+sourceType: scripts
+name: spawn-demo-todo-test
+engine: postgresql
+initialDatabaseName: spawndemotodo
+scriptsFolders:
+  - ../sql
+  - ../test_data

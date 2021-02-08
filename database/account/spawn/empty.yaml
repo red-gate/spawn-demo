@@ -1,0 +1,4 @@
+sourceType: empty
+name: spawn-demo-account-empty
+engine: mssql
+initialDatabaseName: spawndemoaccount 
