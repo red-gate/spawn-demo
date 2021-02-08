@@ -1,0 +1,52 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Backend",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "Build Backend .NET Api",
+      "program": "${workspaceFolder}/api/Spawn.Demo.WebApi/bin/Debug/netcoreapp3.1/Spawn.Demo.WebApi.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/api/Spawn.Demo.WebApi",
+      "stopAtEntry": false,
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ASPNETCORE_URLS": "http://localhost:5050"
+      },
+      "logging": {
+        "moduleLoad": false
+     },
+     "presentation": {
+       "hidden": true
+     }
+    },    
+    {
+      "type": "node",
+      "name": "Frontend",
+      "preLaunchTask": "Install frontend dependencies",
+      "request": "launch",
+      "cwd": "${workspaceRoot}/client",
+      "runtimeArgs": [
+        "start"
+      ],
+      "runtimeExecutable": "yarn",
+      "stopOnEntry": false,
+      "port": 8080,
+      "trace": false,
+      "sourceMaps": false,
+      "outputCapture": "std",
+      "presentation": {
+        "hidden": true
+      }
+    },
+  ],
+  "compounds": [
+    {
+      "name": "Backend and Frontend",
+      "configurations": ["Backend", "Frontend"],
+      "preLaunchTask": "Create Spawn Data Containers",
+      "stopAll": true,
+    }
+  ]
+}
