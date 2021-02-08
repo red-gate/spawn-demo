@@ -76,13 +76,15 @@ accountDataContainerJson=$(spawnctl get data-container $accountContainerName -o 
 todoPort=$(echo $todoDataContainerJson | jq -r .port)
 todoHost=$(echo $todoDataContainerJson | jq -r .host)
 todoPassword=$(echo $todoDataContainerJson | jq -r .password)
+todoUser=$(echo $todoDataContainerJson | jq -r .user)
 
 accountPort=$(echo $accountDataContainerJson | jq -r .port)
 accountHost=$(echo $accountDataContainerJson | jq -r .host)
 accountPassword=$(echo $accountDataContainerJson | jq -r .password)
+accountUser=$(echo $accountDataContainerJson | jq -r .user)
 
-todoConnString="Host=$todoHost;Port=$todoPort;Database=spawndemotodo;User Id=spawn_demo_user;Password=$todoPassword;"
-accountConnString="Server=$accountHost,$accountPort;Database=spawndemoaccount;User Id=spawn_demo_user;Password=$accountPassword;"
+todoConnString="Host=$todoHost;Port=$todoPort;Database=spawndemotodo;User Id=$todoUser;Password=$todoPassword;"
+accountConnString="Server=$accountHost,$accountPort;Database=spawndemoaccount;User Id=$accountUser;Password=$accountPassword;"
 
 jq -n "{\"TodoDatabaseConnectionString\": \"$todoConnString\", \"AccountDatabaseConnectionString\": \"$accountConnString\"}" > $appSettingsFilePath
 
