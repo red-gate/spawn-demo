@@ -1,0 +1,1 @@
+INSERT INTO organizations_members (OrgID, AccountID) VALUES (1, 1)
