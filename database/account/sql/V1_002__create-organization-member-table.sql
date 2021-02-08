@@ -1,0 +1,6 @@
+CREATE TABLE organizations_members(
+    ID INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+    OrgID INT FOREIGN KEY REFERENCES organizations(ID),
+    AccountID INT FOREIGN KEY REFERENCES accounts(ID),
+    CreatedAt DATETIME DEFAULT GETDATE(),
+);
