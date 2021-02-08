@@ -1,0 +1,7 @@
+.Project-page-header{
+  grid-template-columns: 11fr 1fr;
+  display: grid;
+  align-items: center;
+  margin-top: 3em;
+  margin-bottom: 3em;
+}

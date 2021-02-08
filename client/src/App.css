@@ -1,0 +1,52 @@
+.App {
+  text-align: center;
+  display: grid;
+  height: 100vh;
+  grid-template-rows: 60px auto 60px;
+}
+
+.App-bar-name{
+  cursor: pointer;
+  padding-left: .5em;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  right: 20px;
+  position: absolute;
+}
+
+.App-bar-username{
+  padding-right: 1em;
+}
+
+.App-header, .App-footer {
+  background-color: #282c34;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-content{
+  display: grid;
+  grid-template-columns: 1fr 4fr 1fr;
+}
+
+.Orgs-list{
+  display: flex;
+  flex-direction: column;
+  padding: 2em;
+}
+
+.Orgs-list > a {
+  padding-bottom: 1em;
+}
+
+.App-footer {
+  padding-left: 1em;
+}

@@ -1,0 +1,41 @@
+.Orgs-list{
+  display: flex;
+  flex-direction: column;
+  padding: 2em;
+}
+
+.Orgs-list > .Orgs-item{
+  padding-bottom: 1.5em;
+  align-items: center;
+}
+
+.Orgs-item{
+  display: flex;
+  flex-direction: row;
+  display: grid;
+  grid-template-columns: 3fr 2fr 1fr;
+}
+
+.Orgs-item-name {
+  font-size: calc(10px + 2vmin);
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.Orgs-item-icon{
+  margin-right: 1em;
+}
+
+.Orgs-item-createdAt{
+  font-size: 0.75em;
+  font-style: italic;
+}
+
+.Orgs-header{
+  grid-template-columns: 11fr 1fr;
+  display: grid;
+  align-items: center;
+  margin-top: 3em;
+  margin-bottom: 3em;
+}

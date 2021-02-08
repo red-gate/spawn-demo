@@ -1,0 +1,31 @@
+.Projects-list{
+  display: flex;
+  flex-direction: column;
+  padding: 2em;
+}
+
+.Projects-list > .Projects-item{
+  padding-bottom: 1.5em;
+  align-items: center;
+}
+
+.Projects-item{
+  display: flex;
+  flex-direction: row;
+  display: grid;
+  grid-template-columns: 3fr 2fr 1fr;
+}
+
+.Projects-item-name {
+  font-size: calc(10px + 2vmin);
+  display: flex;
+  justify-content: flex-start;
+}
+
+.Projects-item-icon{
+  margin-right: 0.5em;
+}
+.Projects-item-createdAt{
+  font-size: 0.75em;
+  font-style: italic;
+}

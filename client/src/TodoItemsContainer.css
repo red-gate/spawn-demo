@@ -1,0 +1,36 @@
+.TodoItems-list{
+  display: flex;
+  flex-direction: column;
+  padding: 2em;
+}
+
+.TodoItems-list > .TodoItems-item{
+  padding-bottom: 1.5em;
+  align-items: center;
+}
+
+.TodoItems-item{
+  display: flex;
+  flex-direction: row;
+  display: grid;
+  grid-template-columns: 0.5fr 3fr 2fr 0.5fr;
+}
+
+.TodoItems-item-number{
+  font-size: calc(10px + 2vmin);
+  padding-right: 2em;
+}
+
+.TodoItems-item-checkbox{
+  padding-right: 1em;
+}
+
+.TodoItems-item-task {
+  font-size: calc(10px + 2vmin);
+  text-align: left;
+}
+
+.TodoItems-item-createdAt{
+  font-size: 0.75em;
+  font-style: italic;
+}

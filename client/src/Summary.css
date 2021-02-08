@@ -1,0 +1,32 @@
+.home-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 3em;
+  margin-bottom: 3em;
+}
+
+.home-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 3em;
+  margin-right: 3em;
+}
+
+.home-content > div {
+  margin-right: 2em;
+  margin-left: 2em;
+  flex-basis: 0;
+  flex-grow: 1;
+}
+
+.stat > .icon, .stat > .text {
+  font-size: 4em;
+  margin-top: .5em;
+  margin-bottom: .25em;
+}
+
+.stat > .icon {
+  font-size: 6em;
+}
