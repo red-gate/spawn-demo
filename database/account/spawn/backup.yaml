@@ -1,0 +1,8 @@
+sourceType: backup
+name: demo-account
+engine: mssql
+backup:
+  folder: .
+  file: demo_account.bak
+tags:
+  - latest

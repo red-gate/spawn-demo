@@ -1,0 +1,8 @@
+sourceType: backup
+name: demo-todo
+engine: postgresql
+backup:
+  folder: .
+  file: demo_todo.bak
+tags:
+  - latest
