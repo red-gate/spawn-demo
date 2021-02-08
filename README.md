@@ -11,6 +11,8 @@ The application is a simple "Todo" application. It's architecture is as follows:
 * Microsoft SQL Server database (for "account" information)
 * PostgreSQL database (for "todo" item information)
 
+![architecture.png](./docs/architecture.png)
+
 ## Running this locally
 
 To get up and running with this application, perform the following:
