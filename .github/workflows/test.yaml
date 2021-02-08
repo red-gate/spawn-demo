@@ -1,0 +1,46 @@
+name: build
+
+on: workflow_dispatch
+
+jobs:
+  multi:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install spawnctl
+        run: |
+          echo "Downloading and installing spawnctl..."
+          curl -sL https://run.spawn.cc/install | sh
+      - name: Run database migrations
+        run: |
+          export SPAWN_TODO_IMAGE_NAME=demo-todo:latest
+          export SPAWN_ACCOUNT_IMAGE_NAME=demo-account:latest
+
+          echo "Creating 'Todo' Spawn data container from image '$SPAWN_TODO_IMAGE_NAME'"
+          todoContainerName=$(spawnctl create data-container --image $SPAWN_TODO_IMAGE_NAME --lifetime 10m -q)
+          todoJson=$(spawnctl get data-container $todoContainerName -o json)
+          todoHost=$(echo $todoJson | jq -r '.host')
+          todoPort=$(echo $todoJson | jq -r '.port')
+          todoUsername=$(echo $todoJson | jq -r '.user')
+          todoPassword=$(echo $todoJson | jq -r '.password')
+          echo "Successfully created Spawn data container '$todoContainerName'"
+
+          echo
+          echo
+
+          echo "Creating 'Account' Spawn data container from image '$SPAWN_ACCOUNT_IMAGE_NAME'"
+          accountContainerName=$(spawnctl create data-container --image $SPAWN_ACCOUNT_IMAGE_NAME --lifetime 10m -q)
+          accountJson=$(spawnctl get data-container $accountContainerName -o json)
+          accountHost=$(echo $accountJson | jq -r '.host')
+          accountPort=$(echo $accountJson | jq -r '.port')
+          accountUsername=$(echo $accountJson | jq -r '.user')
+          accountPassword=$(echo $accountJson | jq -r '.password')
+          echo "Successfully created Spawn data container '$accountContainerName'"
+
+          echo
+          echo
+
+          ./migrate-db.sh $accountHost $accountPort $accountUsername $accountPassword $todoHost $todoPort $todoUsername $todoPassword
+
+          echo "Successfully migrated both 'Todo' and 'Account' databases"
