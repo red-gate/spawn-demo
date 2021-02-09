@@ -9,7 +9,7 @@
 	],
 	"forwardPorts": [5050, 3000],
 	"mounts": [
-		"source=${env:HOME}/.spawnctl/tokens.yaml,target=/root/.spawnctl/tokens.yaml,type=bind,consistency=cached",
+		"source=${localEnv:HOME}${localEnv:USERPROFILE}/.spawnctl/tokens.yaml,target=/root/.spawnctl/tokens.yaml,type=bind,consistency=cached",
 		"source=spawndemo-devcontainer-vscode-extensions,target=/root/.vscode-server/extensions,type=volume",
 	],
 	"remoteEnv": {
