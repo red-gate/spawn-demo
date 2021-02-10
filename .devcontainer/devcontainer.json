@@ -15,5 +15,5 @@
 	"remoteEnv": {
 		"SPAWNCTL_ACCESS_TOKEN": "${localEnv:SPAWNCTL_ACCESS_TOKEN}"
 	},
-	"postAttachCommand": "rm -rf /workspaces/spawn-demo/client/node_modules && ln -s /yarncache/spawn-demo/client/node_modules /workspaces/spawn-demo/client/node_modules"
+	"postAttachCommand": "rm -rf /workspaces/spawn-demo/client/node_modules && mkdir -p /workspaces/spawn-demo/client/node_modules && ln -s /yarncache/spawn-demo/client/node_modules /workspaces/spawn-demo/client/node_modules"
 }
