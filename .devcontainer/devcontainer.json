@@ -9,11 +9,12 @@
 	],
 	"forwardPorts": [5050, 3000],
 	"mounts": [
-		"source=${env:HOME}/.spawnctl/tokens.yaml,target=/root/.spawnctl/tokens.yaml,type=bind,consistency=cached",
+		"source=${localEnv:HOME}${localEnv:USERPROFILE}/.spawnctl/tokens.yaml,target=/root/.spawnctl/tokens.yaml,type=bind,consistency=cached",
 		"source=spawndemo-devcontainer-vscode-extensions,target=/root/.vscode-server/extensions,type=volume",
 	],
 	"remoteEnv": {
 		"SPAWNCTL_ACCESS_TOKEN": "${localEnv:SPAWNCTL_ACCESS_TOKEN}"
 	},
-	"postAttachCommand": "rm -rf /workspaces/spawn-demo/client/node_modules && ln -s /yarncache/spawn-demo/client/node_modules /workspaces/spawn-demo/client/node_modules"
+	"initializeCommand": ["docker", "run", "--rm", "-v", "${localEnv:HOME}${localEnv:USERPROFILE}:/homedir", "busybox", "sh", "-c", "mkdir -p /homedir/.spawnctl/ && touch /homedir/.spawnctl/tokens.yaml"],
+	"postAttachCommand": "rm -rf /workspaces/spawn-demo/client/node_modules && mkdir -p /workspaces/spawn-demo/client/node_modules && ln -s /yarncache/spawn-demo/client/node_modules /workspaces/spawn-demo/client/node_modules"
 }
