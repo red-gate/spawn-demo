@@ -1,6 +1,8 @@
 {
 	"name": "Spawn Demo app devcontainer",
-	"image": "cjheppell/devcontainers-spawn-demo:latest",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
 	"settings": {
 		"terminal.integrated.shell.linux": "/bin/bash"
 	},
@@ -16,5 +18,4 @@
 		"SPAWNCTL_ACCESS_TOKEN": "${localEnv:SPAWNCTL_ACCESS_TOKEN}"
 	},
 	"initializeCommand": ["docker", "run", "--rm", "-v", "${localEnv:HOME}${localEnv:USERPROFILE}:/homedir", "busybox", "sh", "-c", "mkdir -p /homedir/.spawnctl/ && touch /homedir/.spawnctl/tokens.yaml"],
-	"postAttachCommand": "rm -rf /workspaces/spawn-demo/client/node_modules && mkdir -p /workspaces/spawn-demo/client/node_modules && ln -s /yarncache/spawn-demo/client/node_modules /workspaces/spawn-demo/client/node_modules"
 }
