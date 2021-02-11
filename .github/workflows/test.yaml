@@ -44,3 +44,5 @@ jobs:
           ./migrate-db.sh $accountHost $accountPort $accountUsername $accountPassword $todoHost $todoPort $todoUsername $todoPassword
 
           echo "Successfully migrated both 'Todo' and 'Account' databases"
+        env:
+          SPAWNCTL_ACCESS_TOKEN: ${{ secrets.SPAWNCTL_ACCESS_TOKEN }}
