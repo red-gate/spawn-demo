@@ -14,6 +14,8 @@ jobs:
           curl -sL https://run.spawn.cc/install | sh
       - name: Run database migrations
         run: |
+          export PATH=$HOME/.spawnctl/bin:$PATH
+
           export SPAWN_TODO_IMAGE_NAME=demo-todo:latest
           export SPAWN_ACCOUNT_IMAGE_NAME=demo-account:latest
 
