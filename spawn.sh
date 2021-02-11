@@ -18,7 +18,36 @@ function getGitBranchName(){
     fi    
 }
 
-GIT_BRANCH=$(getGitBranchName)
+function getContainerName(){
+  GIT_BRANCH=$(getGitBranchName)
+
+  database=$1
+  case $database in
+
+    account)
+      if [[ -z $SPAWN_ACCOUNT_CONTAINER_NAME_OVERRIDE ]]; then
+          accountContainerName="$(echo $SPAWN_ACCOUNT_IMAGE_NAME | cut -f1 -d":")-$GIT_BRANCH"
+          echo $accountContainerName
+      else 
+        echo $SPAWN_ACCOUNT_CONTAINER_NAME_OVERRIDE
+      fi
+      ;;
+
+    todo)
+      if [[ -z $SPAWN_TODO_CONTAINER_NAME_OVERRIDE ]]; then
+          todoContainerName="$(echo $SPAWN_TODO_IMAGE_NAME | cut -f1 -d":")-$GIT_BRANCH"
+          echo $todoContainerName
+      else 
+        echo $SPAWN_TODO_CONTAINER_NAME_OVERRIDE
+      fi
+      ;;
+
+    *)
+      logSpawnMessage "Unknown database name '$database'"
+      exit 1
+      ;;
+  esac
+}
 
 function logSpawnMessage() {
     GREEN='\033[0;32m'
@@ -69,8 +98,8 @@ function containersExist() {
 }
 
 function setupContainers() {
-    todoContainerName="$(echo $SPAWN_TODO_IMAGE_NAME | cut -f1 -d":")-$GIT_BRANCH"
-    accountContainerName="$(echo $SPAWN_ACCOUNT_IMAGE_NAME | cut -f1 -d":")-$GIT_BRANCH"
+    todoContainerName="$(getContainerName todo)"
+    accountContainerName="$(getContainerName account)"
 
     set +e
     containersExist "$todoContainerName" "$accountContainerName"
