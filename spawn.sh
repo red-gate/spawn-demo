@@ -158,7 +158,3 @@ function updateDatabaseAppSettings {
 
     logSpawnMessage "'$appSettingsFilePath' successfully updated with data container connection string"
 }
-
-validateImagesExist
-
-setupContainers

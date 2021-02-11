@@ -3,8 +3,8 @@
   "tasks": [
     {
       "label": "Create Spawn Data Containers",
-      "command": "${workspaceRoot}/spawn.sh",
-      "type": "process",
+      "command": "source ${workspaceRoot}/spawn.sh && validateImagesExist && setupContainers",
+      "type": "shell",
       "presentation": {
         "echo": true,
         "reveal": "always",
