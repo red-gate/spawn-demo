@@ -18,7 +18,7 @@ ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
 
 WORKDIR /app
 
-COPY --from=backend-build /backend/Spawn.Demo.WebApi ./
+COPY --from=backend-build /backend/Spawn.Demo.WebApi/out ./
 
 # Run this container as non-root user
 # 5000 is an arbitrarily chosen, non-reserved Linux UID
