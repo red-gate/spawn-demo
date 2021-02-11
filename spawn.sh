@@ -6,8 +6,6 @@ export PATH=$HOME/.spawnctl/bin:$PATH
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
-source $DIR/.env
-
 function getGitBranchName(){
     if [[ "$OSTYPE" == "darwin"* ]]; then
         branchName=$(git rev-parse --abbrev-ref HEAD | tr -cd \[:alnum:\])
