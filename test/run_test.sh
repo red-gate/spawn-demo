@@ -11,8 +11,6 @@ function logSpawnMessage() {
 TEST_TO_RUN=$1
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
-source $DIR/auth.sh
-
 todoContainerName=""
 accountContainerName=""
 dotnetLogFile="$DIR/dotnetlog.txt"

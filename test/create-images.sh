@@ -10,8 +10,6 @@ function logSpawnMessage() {
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
-source $DIR/auth.sh
-
 logSpawnMessage "Creating 'Todo' Spawn data image for testing with name: '${SPAWN_TODO_IMAGE_NAME}:${TAG}'"
 spawnctl create data-image -f ./database/todo/spawn/test.yaml --name $SPAWN_TODO_IMAGE_NAME --tag $TAG -q > /dev/null
 logSpawnMessage "Successfully created Spawn data image '${SPAWN_TODO_IMAGE_NAME}:${TAG}'"
