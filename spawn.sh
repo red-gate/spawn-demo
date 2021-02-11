@@ -129,17 +129,12 @@ function setupContainers() {
     echo
     echo
 
-    migrateDatabases "$todoContainerName" "$accountContainerName"
-
-    echo
-    echo
-
     logSpawnMessage "Successfully provisioned Spawn containers. Ready to start app"
 }
 
 function migrateDatabases {
-    todoDataContainerName=$1
-    accountDataContainerName=$2
+    todoContainerName="$(getContainerName todo)"
+    accountContainerName="$(getContainerName account)"
 
     todoDataContainerJson=$(spawnctl get data-container $todoDataContainerName -o json)
     accountDataContainerJson=$(spawnctl get data-container $accountDataContainerName -o json)
