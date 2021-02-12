@@ -42,7 +42,7 @@ jobs:
         uses: actions/checkout@v2
       - id: account
         name: Build Spawn test 'account' data image
-        uses: red-gate/spawn-ci-plugins/github/data-image/create@image-github-actions
+        uses: red-gate/spawn-ci-plugins/github/data-image/create@main
         with:
           dataImageYaml: database/account/spawn/test.yaml
           tags: --tag=${{ github.run_number }}
@@ -50,7 +50,7 @@ jobs:
           SPAWNCTL_ACCESS_TOKEN: ${{ secrets.SPAWNCTL_ACCESS_TOKEN }}
       - id: todo
         name: Build Spawn test 'todo' data image
-        uses: red-gate/spawn-ci-plugins/github/data-image/create@image-github-actions
+        uses: red-gate/spawn-ci-plugins/github/data-image/create@main
         with:
           dataImageYaml: database/todo/spawn/test.yaml
           tags: --tag=${{ github.run_number }}
@@ -172,13 +172,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Delete Spawn test 'account' data image
-        uses: red-gate/spawn-ci-plugins/github/data-image/delete@image-github-actions
+        uses: red-gate/spawn-ci-plugins/github/data-image/delete@main
         with:
           dataImage: ${{ needs.build_spawn_test_images.outputs.accountDataImageName }}:${{ github.run_number }}
         env:
           SPAWNCTL_ACCESS_TOKEN: ${{ secrets.SPAWNCTL_ACCESS_TOKEN }}
       - name: Delete Spawn test 'todo' data image
-        uses: red-gate/spawn-ci-plugins/github/data-image/delete@image-github-actions
+        uses: red-gate/spawn-ci-plugins/github/data-image/delete@main
         with:
           dataImage: ${{ needs.build_spawn_test_images.outputs.todoDataImageName }}:${{ github.run_number }}
         env:
