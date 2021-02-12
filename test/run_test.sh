@@ -52,11 +52,14 @@ setupContainers
 disablePooling=true
 updateDatabaseAppSettings $SPAWN_TODO_CONTAINER_NAME_OVERRIDE $SPAWN_ACCOUNT_CONTAINER_NAME_OVERRIDE $disablePooling
 
+dbAppSettings=$(cat $TEST_DIR/../api/Spawn.Demo.WebApi/appsettings.Development.Database.json)
+
 echo "Starting the API as a docker container..."
 
 apiContainerId=$(docker run -p 5050:8080 \
   -d \
-  -v $TEST_DIR/../api/Spawn.Demo.WebApi/appsettings.Development.Database.json:/app/appsettings.Development.Database.json \
+  -e TodoDatabaseConnectionString="$(echo $dbAppSettings | jq -r .TodoDatabaseConnectionString)" \
+  -e AccountDatabaseConnectionString="$(echo $dbAppSettings | jq -r .AccountDatabaseConnectionString)" \
   -e DatabasePooling=false \
   redgatefoundry/spawn-demo-api)
 
