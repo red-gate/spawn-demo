@@ -77,7 +77,7 @@ MOCHA_EXIT_CODE=$?
 
 echo "Test run complete."
 
-if [[ ! $MOCHA_EXIT_CODE ]]; then
+if [[ $MOCHA_EXIT_CODE != 0 ]]; then
   echo "Non-zero mocha exit code. Dotnet logs below:"
   docker logs $apiContainerId
 fi

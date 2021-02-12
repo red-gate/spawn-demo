@@ -55,12 +55,6 @@ function logSpawnMessage() {
     printf "🛸  ${GREEN}$1${NC}\n"
 }
 
-function error() {
-    logSpawnMessage "Error during spawn initialisation on line $1"
-}
-
-trap 'error $LINENO' ERR
-
 function validateImagesExist() {
     if [[ -z $SPAWN_TODO_IMAGE_NAME ]]; then
         logSpawnMessage "No spawn 'Todo' database image specified in environment variable SPAWN_TODO_IMAGE_NAME. Please specify an image id."
