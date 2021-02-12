@@ -9,108 +9,92 @@ function logSpawnMessage() {
 }
 
 TEST_TO_RUN=$1
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
-source $DIR/auth.sh
+if [[ "$TEST_TO_RUN" = "" ]]; then
+    echo "Error: No test to run was specified. You must specify a test to run by passing the tests to run as the first argument"
+    exit 1
+fi
 
-todoContainerName=""
-accountContainerName=""
-dotnetLogFile="$DIR/dotnetlog.txt"
+if [[ -z $ACCOUNT_TEST_SPAWN_DATA_IMAGE_NAME ]]; then
+    logSpawnMessage "Error: you must specify a name for the account spawn data image for this test by setting the 'ACCOUNT_TEST_SPAWN_DATA_IMAGE_NAME' environment variable"
+    exit 1
+fi
 
+if [[ -z $TODO_TEST_SPAWN_DATA_IMAGE_NAME ]]; then
+    logSpawnMessage "Error: you must specify a name for the todo spawn data image for this test by setting the 'TODO_TEST_SPAWN_DATA_IMAGE_NAME' environment variable"
+    exit 1
+fi
 
-pushd $DIR
+if [[ -z $TAG ]]; then
+    logSpawnMessage "Error: you must specify the tag that was used for the test data images by setting the 'TAG' environment variable"
+    exit 1
+fi
 
-yarn
+if [[ -z $ACCOUNT_SPAWN_DATA_CONTAINER_NAME ]]; then
+    logSpawnMessage "Error: you must specify a name for the account spawn data container for this test by setting the 'ACCOUNT_SPAWN_DATA_CONTAINER_NAME' environment variable"
+    exit 1
+fi
 
-popd
+if [[ -z $TODO_SPAWN_DATA_CONTAINER_NAME ]]; then
+    logSpawnMessage "Error: you must specify a name for the account spawn data container for this test by setting the 'TODO_SPAWN_DATA_CONTAINER_NAME' environment variable"
+    exit 1
+fi
 
-echo "Starting '$TEST_TO_RUN' tests..."
+TEST_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
-function cleanup {
-  logSpawnMessage "Deleting existing 'Todo' Spawn data container '$todoContainerName'"
-  spawnctl delete data-container $todoContainerName -q > /dev/null
-  logSpawnMessage "'$todoContainerName' deleted successfully"
+source $TEST_DIR/../spawn.sh
+export SPAWN_ACCOUNT_IMAGE_NAME="${ACCOUNT_TEST_SPAWN_DATA_IMAGE_NAME}:${TAG}"
+export SPAWN_TODO_IMAGE_NAME="${TODO_TEST_SPAWN_DATA_IMAGE_NAME}:${TAG}"
+export SPAWN_ACCOUNT_CONTAINER_NAME_OVERRIDE=$ACCOUNT_SPAWN_DATA_CONTAINER_NAME
+export SPAWN_TODO_CONTAINER_NAME_OVERRIDE=$TODO_SPAWN_DATA_CONTAINER_NAME
+validateImagesExist
+setupContainers
+disablePooling=true
+updateDatabaseAppSettings $SPAWN_TODO_CONTAINER_NAME_OVERRIDE $SPAWN_ACCOUNT_CONTAINER_NAME_OVERRIDE $disablePooling
 
-  logSpawnMessage "Deleting existing 'Account' Spawn data container '$accountContainerName'"
-  spawnctl delete data-container $accountContainerName -q > /dev/null
-  logSpawnMessage "'$accountContainerName' deleted successfully"
+dbAppSettings=$(cat $TEST_DIR/../api/Spawn.Demo.WebApi/appsettings.Development.Database.json)
 
-  rm -rf $dotnetLogFile
+echo "Starting the API as a docker container..."
 
-  if [[ -z "${IN_CI}" ]]; then
-    echo "Not running in CI, so attempting to kill jobs..."
-    jobs -p | while read pid; do kill -15 -- -$(ps -o pgid= $pid | grep -o [0-9]*); done
-    echo "An access token was generated for this test - run 'spawnctl get access-tokens' view it and delete it manually"
-  fi
-}
+apiContainerId=$(docker run -p 5050:8080 \
+  -d \
+  -e TodoDatabaseConnectionString="$(echo $dbAppSettings | jq -r .TodoDatabaseConnectionString)" \
+  -e AccountDatabaseConnectionString="$(echo $dbAppSettings | jq -r .AccountDatabaseConnectionString)" \
+  -e DatabasePooling=false \
+  redgatefoundry/spawn-demo-api)
 
-trap cleanup EXIT
-
-logSpawnMessage "Creating 'Todo' Spawn data container from image '${SPAWN_TODO_IMAGE_NAME}:${TAG}'"
-todoContainerName=$(spawnctl create data-container --image ${SPAWN_TODO_IMAGE_NAME}:${TAG} -q)
-todoJson=$(spawnctl get data-container $todoContainerName -o json)
-todoHost=$(echo $todoJson | jq -r '.host')
-todoPort=$(echo $todoJson | jq -r '.port')
-logSpawnMessage "Successfully created Spawn data container '$todoContainerName'"
-
-echo
-
-logSpawnMessage "Creating 'Account' Spawn data container from image '${SPAWN_ACCOUNT_IMAGE_NAME}:${TAG}'"
-accountContainerName=$(spawnctl create data-container --image ${SPAWN_ACCOUNT_IMAGE_NAME}:${TAG} -q)
-accountJson=$(spawnctl get data-container $accountContainerName -o json)
-accountHost=$(echo $accountJson | jq -r '.host')
-accountPort=$(echo $accountJson | jq -r '.port')
-logSpawnMessage "Successfully created Spawn data container '$accountContainerName'"
-
-echo
-
-pushd api/Spawn.Demo.WebApi > /dev/null
-
-appSettingsFilePath=$DIR/../api/Spawn.Demo.WebApi/appsettings.Development.Database.json
-
-logSpawnMessage "Updating '$appSettingsFilePath' with data container connection strings"
-
-todoDataContainerJson=$(spawnctl get data-container $todoContainerName -o json)
-accountDataContainerJson=$(spawnctl get data-container $accountContainerName -o json)
-
-todoPort=$(echo $todoDataContainerJson | jq -r .port)
-todoHost=$(echo $todoDataContainerJson | jq -r .host)
-todoPassword=$(echo $todoDataContainerJson | jq -r .password)
-todoUser=$(echo $todoDataContainerJson | jq -r .user)
-
-accountPort=$(echo $accountDataContainerJson | jq -r .port)
-accountHost=$(echo $accountDataContainerJson | jq -r .host)
-accountPassword=$(echo $accountDataContainerJson | jq -r .password)
-accountUser=$(echo $accountDataContainerJson | jq -r .user)
-
-todoConnString="Host=$todoHost;Port=$todoPort;Database=spawndemotodo;User Id=$todoUser;Password=$todoPassword;"
-accountConnString="Server=$accountHost,$accountPort;Database=spawndemoaccount;User Id=$accountUser;Password=$accountPassword;"
-
-jq -n "{\"TodoDatabaseConnectionString\": \"$todoConnString\", \"AccountDatabaseConnectionString\": \"$accountConnString\"}" > $appSettingsFilePath
-
-logSpawnMessage "'$appSettingsFilePath' successfully updated with data container connection string"
-
-dotnet run &> $dotnetLogFile &
-popd > /dev/null
-
-if ! $DIR/wait-for-it.sh -t 180 localhost:5050 > /dev/null 2>&1 ; then
+if ! $TEST_DIR/wait-for-it.sh -t 180 localhost:5050 > /dev/null 2>&1 ; then
     echo "ERROR: API was not available after 180 seconds."
     exit 1
 fi
 
-export todoContainerName
-export accountContainerName
-
 echo "Starting tests for '$TEST_TO_RUN'"
 
-$DIR/node_modules/.bin/mocha --grep $TEST_TO_RUN || :
+pushd $TEST_DIR
+
+echo "Installing test dependencies..."
+yarn
+popd
+
+export todoContainerName=$TODO_SPAWN_DATA_CONTAINER_NAME
+export accountContainerName=$ACCOUNT_SPAWN_DATA_CONTAINER_NAME
+
+set +e
+$TEST_DIR/node_modules/.bin/mocha --grep $TEST_TO_RUN
 MOCHA_EXIT_CODE=$?
+set -e
 
 echo "Test run complete."
 
-if [[ ! $MOCHA_EXIT_CODE ]]; then
+if [[ $MOCHA_EXIT_CODE != 0 ]]; then
   echo "Non-zero mocha exit code. Dotnet logs below:"
-  cat $dotnetLogFile
+  docker logs $apiContainerId
 fi
+
+echo "Cleaning up"
+
+spawnctl delete data-container -q $ACCOUNT_SPAWN_DATA_CONTAINER_NAME
+spawnctl delete data-container -q $TODO_SPAWN_DATA_CONTAINER_NAME
+docker rm -f $apiContainerId
 
 exit $MOCHA_EXIT_CODE

@@ -3,7 +3,7 @@
   "tasks": [
     {
       "label": "Create Spawn Data Containers",
-      "command": "source ${workspaceRoot}/.env && source ${workspaceRoot}/spawn.sh && validateImagesExist && setupContainers",
+      "command": "source ${workspaceRoot}/.env && source ${workspaceRoot}/spawn.sh && validateImagesExist && setupContainers && migrateDatabases",
       "type": "shell",
       "presentation": {
         "echo": true,

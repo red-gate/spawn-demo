@@ -72,8 +72,8 @@ namespace Spawn.Demo.WebApi
 
             services
                 .AddSingleton(Log.Logger)
-                .AddScoped(_ => new TodoConnectionService(todoConnString))
-                .AddScoped(_ => new AccountConnectionService(accountConnString))
+                .AddScoped(_ => new TodoConnectionService(todoConnString, bool.Parse(Configuration["DatabasePooling"])))
+                .AddScoped(_ => new AccountConnectionService(accountConnString, bool.Parse(Configuration["DatabasePooling"])))
                 .AddScoped<IAccountStore, AccountStore>()
                 .AddScoped<IOrganizationStore, OrganizationStore>()
                 .AddScoped<IProjectStore, ProjectStore>()

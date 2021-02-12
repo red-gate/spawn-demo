@@ -1,4 +1,4 @@
-name: test
+name: Database migration test
 
 on: workflow_dispatch
 
@@ -47,4 +47,4 @@ jobs:
 
           echo "Successfully migrated both 'Todo' and 'Account' databases"
         env:
-          SPAWNCTL_ACCESS_TOKEN: ${{ secrets.SPAWNCTL_ACCESS_TOKEN }}
+          SPAWNCTL_ACCESS_TOKEN: ${{ secrets.SPAWNCTL_ACCESS_TOKEN }} 
