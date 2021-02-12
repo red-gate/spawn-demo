@@ -72,8 +72,10 @@ popd
 export todoContainerName=$TODO_SPAWN_DATA_CONTAINER_NAME
 export accountContainerName=$ACCOUNT_SPAWN_DATA_CONTAINER_NAME
 
-$TEST_DIR/node_modules/.bin/mocha --grep $TEST_TO_RUN || :
+set +e
+$TEST_DIR/node_modules/.bin/mocha --grep $TEST_TO_RUN
 MOCHA_EXIT_CODE=$?
+set -e
 
 echo "Test run complete."
 
