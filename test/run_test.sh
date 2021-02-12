@@ -54,7 +54,11 @@ updateDatabaseAppSettings $SPAWN_TODO_CONTAINER_NAME_OVERRIDE $SPAWN_ACCOUNT_CON
 
 echo "Starting the API as a docker container..."
 
-apiContainerId=$(docker run -p 5050:8080 -d -v $TEST_DIR/../api/Spawn.Demo.WebApi/appsettings.Development.Database.json:/app/appsettings.Development.Database.json redgatefoundry/spawn-demo-api)
+apiContainerId=$(docker run -p 5050:8080 \
+  -d \
+  -v $TEST_DIR/../api/Spawn.Demo.WebApi/appsettings.Development.Database.json:/app/appsettings.Development.Database.json \
+  -e DatabasePooling=false \
+  redgatefoundry/spawn-demo-api)
 
 if ! $TEST_DIR/wait-for-it.sh -t 180 localhost:5050 > /dev/null 2>&1 ; then
     echo "ERROR: API was not available after 180 seconds."
