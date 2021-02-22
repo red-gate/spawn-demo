@@ -7,9 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="NUnit" Version="3.12.0" />
+    <PackageReference Include="NSubstitute" Version="4.2.2" />
+    <PackageReference Include="NUnit" Version="3.13.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.16.1" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0"/>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="2.1.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Spawn.Demo.Store\Spawn.Demo.Store.csproj" />
+    <ProjectReference Include="..\Spawn.Demo.Models\Spawn.Demo.Models.csproj" />
+    <ProjectReference Include="..\Spawn.Demo.Logging\Spawn.Demo.Logging.csproj" />
+    <ProjectReference Include="..\Spawn.Demo.WebApi\Spawn.Demo.WebApi.csproj" />
+  </ItemGroup>
+  
 </Project>
