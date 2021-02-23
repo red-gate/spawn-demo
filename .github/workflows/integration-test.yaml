@@ -10,9 +10,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - run: |
-          curl https://run.spawn.cc/install | sh
+          echo "Installing spawnctl..."
+          curl https://run.spawn.cc/install 2>/dev/null | sh > /dev/null 2>&1
           export PATH=$PATH:$HOME/.spawnctl/bin
+          echo "spawnctl installed successfully"
 
+          echo
+          echo
+
+          echo "Starting integration tests..."
           pushd api/Spawn.Demo.WebApi.Tests/
           dotnet test -l "console;verbosity=detailed"
           popd
