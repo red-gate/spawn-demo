@@ -20,35 +20,35 @@ namespace Spawn.Demo.WebApi.Tests.Spawnctl
 
         public string CreateDataImage(string imageDefinitionFilepath, params string[] extraArgs)
         {
-            _logger.WriteLine("Creating spawn data image...");
+            _logger.WriteLine("🛸 Creating spawn data image...");
             var args = new List<string> { "create", "data-image", "-f", imageDefinitionFilepath };
             args.AddRange(extraArgs);
             var dataImage = RunSpawnctl(args.ToArray());
-            _logger.WriteLine($"Successfully created spawn data image {dataImage}");
+            _logger.WriteLine($"🛸 Successfully created spawn data image {dataImage}");
             return dataImage;
         }
 
         public string CreateDataContainer(string imageIdentifier)
         {
-            _logger.WriteLine($"Creating spawn data container from image '{imageIdentifier}...");
+            _logger.WriteLine($"🛸 Creating spawn data container from image '{imageIdentifier}...");
             var dataContainer = RunSpawnctl("create", "data-container", "--image", imageIdentifier);
-            _logger.WriteLine($"Successfully created spawn data container '{dataContainer}'");
+            _logger.WriteLine($"🛸 Successfully created spawn data container '{dataContainer}'");
             return dataContainer;
         }
 
         public string DeleteDataImage(string imageIdentifier)
         {
-            _logger.WriteLine($"Deleting spawn data image '{imageIdentifier}'...");
+            _logger.WriteLine($"🛸 Deleting spawn data image '{imageIdentifier}'...");
             var result = RunSpawnctl("delete", "data-image", imageIdentifier);
-            _logger.WriteLine($"Successfully deleted spawn data image {imageIdentifier}");
+            _logger.WriteLine($"🛸 Successfully deleted spawn data image {imageIdentifier}");
             return result;
         }
 
         public string DeleteDataContainer(string containerIdentifier)
         {
-            _logger.WriteLine($"Deleting spawn data container '{containerIdentifier}'...");
+            _logger.WriteLine($"🛸 Deleting spawn data container '{containerIdentifier}'...");
             var result = RunSpawnctl("delete", "data-container", containerIdentifier);
-            _logger.WriteLine($"Successfully deleted spawn data container '{containerIdentifier}'");
+            _logger.WriteLine($"🛸 Successfully deleted spawn data container '{containerIdentifier}'");
             return result;
         }
 
