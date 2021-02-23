@@ -37,7 +37,7 @@ namespace Spawn.Demo.WebApi.Tests
             var todoConnectionService = new TodoConnectionService(todoConnString, true);
             var todoStore = new TodoStore(todoConnectionService, logger);
             var projectStore = new ProjectStore(todoConnectionService, logger);
-            
+
             _todoController = new TodoController(todoStore, projectStore, logger);
             _todoController.ControllerContext = new ControllerContext()
             {
@@ -62,9 +62,9 @@ namespace Spawn.Demo.WebApi.Tests
 
             await _todoController.RecordAsync(new Models.TodoItem
             {
-              CreatedAt = DateTime.Now,
-              Done = false,
-              Task = "My new todo task",
+                CreatedAt = DateTime.Now,
+                Done = false,
+                Task = "My new todo task",
             });
 
             result = await _todoController.GetAsync();
@@ -78,9 +78,9 @@ namespace Spawn.Demo.WebApi.Tests
         {
             await _todoController.RecordAsync(new Models.TodoItem
             {
-              CreatedAt = DateTime.Now,
-              Done = false,
-              Task = "My new todo task",
+                CreatedAt = DateTime.Now,
+                Done = false,
+                Task = "My new todo task",
             });
 
             var result = await _todoController.GetAsync();
@@ -102,9 +102,9 @@ namespace Spawn.Demo.WebApi.Tests
         {
             await _todoController.RecordAsync(new Models.TodoItem
             {
-              CreatedAt = DateTime.Now,
-              Done = false,
-              Task = "My new todo task",
+                CreatedAt = DateTime.Now,
+                Done = false,
+                Task = "My new todo task",
             });
 
             var result = await _todoController.GetAsync();
@@ -132,15 +132,15 @@ namespace Spawn.Demo.WebApi.Tests
         {
             await _todoController.RecordAsync(new Models.TodoItem
             {
-              CreatedAt = DateTime.Now,
-              Done = false,
-              Task = "My first todo task",
+                CreatedAt = DateTime.Now,
+                Done = false,
+                Task = "My first todo task",
             });
             await _todoController.RecordAsync(new Models.TodoItem
             {
-              CreatedAt = DateTime.Now,
-              Done = false,
-              Task = "My second todo task",
+                CreatedAt = DateTime.Now,
+                Done = false,
+                Task = "My second todo task",
             });
 
             var result = await _todoController.GetAsync();
@@ -159,4 +159,5 @@ namespace Spawn.Demo.WebApi.Tests
             Assert.That(todos.Any(x => x.Task == "My second todo task"), Is.True);
         }
     }
+
 }

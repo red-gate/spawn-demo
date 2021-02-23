@@ -18,7 +18,7 @@ namespace Spawn.Demo.WebApi.Tests
         {
             _spawnClient = new SpawnClient(TestContext.Out);
         }
-        
+
         [OneTimeSetUp]
         public async Task CreateDataImages()
         {
@@ -29,7 +29,7 @@ namespace Spawn.Demo.WebApi.Tests
             TodoDataImageName = string.IsNullOrEmpty(todoImageName) ? "demo-todo-test" : todoImageName;
 
             var accountImageYamlFilepath = Environment.GetEnvironmentVariable("ACCOUNT_IMAGE_YAML_FILEPATH");
-            var todoImageYamlFilepath= Environment.GetEnvironmentVariable("TODO_IMAGE_YAML_FILEPATH");
+            var todoImageYamlFilepath = Environment.GetEnvironmentVariable("TODO_IMAGE_YAML_FILEPATH");
 
             accountImageYamlFilepath = string.IsNullOrEmpty(accountImageYamlFilepath) ? "../../../../../database/account/spawn/test.yaml" : accountImageYamlFilepath;
             todoImageYamlFilepath = string.IsNullOrEmpty(todoImageYamlFilepath) ? "../../../../../database/todo/spawn/test.yaml" : todoImageYamlFilepath;

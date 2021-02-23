@@ -21,7 +21,7 @@ namespace Spawn.Demo.WebApi.Tests.Spawnctl
         public string CreateDataImage(string imageDefinitionFilepath, params string[] extraArgs)
         {
             _logger.WriteLine("Creating spawn data image...");
-            var args = new List<string>{"create", "data-image", "-f", imageDefinitionFilepath };
+            var args = new List<string> { "create", "data-image", "-f", imageDefinitionFilepath };
             args.AddRange(extraArgs);
             var dataImage = RunSpawnctl(args.ToArray());
             _logger.WriteLine($"Successfully created spawn data image {dataImage}");
