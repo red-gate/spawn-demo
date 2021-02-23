@@ -57,7 +57,7 @@ namespace Spawn.Demo.WebApi.Tests
         }
 
         [TearDown]
-        public void Teardown()
+        public async Task Teardown()
         {
             if(TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
             {
@@ -68,6 +68,7 @@ namespace Spawn.Demo.WebApi.Tests
             // We'll let spawn handle the background deletion
             Task.Run(() => _spawnClient.DeleteDataContainer(_todoDataContainer));
             Task.Run(() => _spawnClient.DeleteDataContainer(_accountDataContainer));
+            await Task.Delay(300);
         }
 
         [Test]
