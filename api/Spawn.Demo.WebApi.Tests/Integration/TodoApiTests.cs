@@ -126,5 +126,37 @@ namespace Spawn.Demo.WebApi.Tests
             var updatedTodoItem = todos.ElementAt(0);
             Assert.That(updatedTodoItem.Task, Is.EqualTo(updatedTodoTask));
         }
+
+        [Test]
+        public async Task WhenDeletingOneTodoItem_ThenOnlyOneTodoItemIsDeleted()
+        {
+            await _todoController.RecordAsync(new Models.TodoItem
+            {
+              CreatedAt = DateTime.Now,
+              Done = false,
+              Task = "My first todo task",
+            });
+            await _todoController.RecordAsync(new Models.TodoItem
+            {
+              CreatedAt = DateTime.Now,
+              Done = false,
+              Task = "My second todo task",
+            });
+
+            var result = await _todoController.GetAsync();
+            var todos = TestHelpers.GetObjectResultContent<IEnumerable<Models.TodoItem>>(result);
+            Assert.That(todos, Is.Not.Empty);
+            Assert.That(todos.Count(), Is.EqualTo(2));
+
+            var firstTodoItem = todos.ElementAt(0);
+
+            await _todoController.DeleteAsync(firstTodoItem);
+
+            result = await _todoController.GetAsync();
+            todos = TestHelpers.GetObjectResultContent<IEnumerable<Models.TodoItem>>(result);
+            Assert.That(todos, Is.Not.Empty, message: "Expected 1 remaining todo item after deleting, but todos was actually empty");
+            Assert.That(todos.Count(), Is.EqualTo(1));
+            Assert.That(todos.Any(x => x.Task == "My second todo task"), Is.True);
+        }
     }
 }
