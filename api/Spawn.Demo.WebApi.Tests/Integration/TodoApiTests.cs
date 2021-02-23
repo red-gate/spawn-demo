@@ -51,7 +51,7 @@ namespace Spawn.Demo.WebApi.Tests
         {
             if(TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
             {
-              _spawnClient.CreateImageFromCurrentContainerState(_todoDataContainer, $"todo-{TestContext.CurrentContext.Test.ID}", "--tag", SetupFixture.TodoDataImageTag, "--team", "red-gate:sharks");
+              _spawnClient.CreateImageFromCurrentContainerState(_todoDataContainer, $"todo-{TestContext.CurrentContext.Test.ID}", SetupFixture.TodoDataImageTag, "--team", "red-gate:sharks");
             }
             // Don't wait for these tasks to complete
             // We'll let spawn handle the background deletion

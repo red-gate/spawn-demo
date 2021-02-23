@@ -69,14 +69,14 @@ namespace Spawn.Demo.WebApi.Tests.Spawnctl
             }
         }
 
-        public string CreateImageFromCurrentContainerState(string containerIdentifier, string newImageName, params string[] extraArgs)
+        public string CreateImageFromCurrentContainerState(string containerIdentifier, string newImageName, string tag, params string[] extraArgs)
         {
-            _logger.WriteLine($"Creating new data image '{newImageName}' from current state of data container '{containerIdentifier}'...");
+            _logger.WriteLine($"🛸 Creating new data image '{newImageName}' from current state of data container '{containerIdentifier}'...");
             var newRevision = RunSpawnctl("save", "data-container", containerIdentifier, "-q");
-            var args = new List<string> { "graduate", "data-container", containerIdentifier, "--revision", newRevision, "--name", newImageName };
+            var args = new List<string> { "graduate", "data-container", containerIdentifier, "--revision", newRevision, "--name", newImageName, "--tag", tag };
             args.AddRange(extraArgs);
             var newImage = RunSpawnctl(args.ToArray());
-            _logger.WriteLine($"Successfully graduated current data container state to new data image '{newImageName}'");
+            _logger.WriteLine($"🛸 Successfully graduated current data container state to new data image '{newImageName}:{tag}'");
             return newImage;
         }
 
