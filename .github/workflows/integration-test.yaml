@@ -14,7 +14,7 @@ jobs:
           export PATH=$PATH:$HOME/.spawnctl/bin
 
           pushd api/Spawn.Demo.WebApi.Tests/
-          dotnet test
+          dotnet test -l "console;verbosity=detailed"
           popd
         name: 'Run integration tests with Spawn databases'
         env:
