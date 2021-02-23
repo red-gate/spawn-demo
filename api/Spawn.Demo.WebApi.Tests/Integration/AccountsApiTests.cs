@@ -9,7 +9,6 @@ using System;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 
 namespace Spawn.Demo.WebApi.Tests
@@ -40,7 +39,7 @@ namespace Spawn.Demo.WebApi.Tests
 
             _accountsController.ControllerContext = new ControllerContext()
             {
-                HttpContext = new DefaultHttpContext() { User = GetUser(TestUserId) }
+                HttpContext = new DefaultHttpContext() { User = TestHelpers.GetUser(TestUserId) }
             };
         }
 
@@ -54,7 +53,7 @@ namespace Spawn.Demo.WebApi.Tests
         public async Task WhenInvokingAddAccount_ThenOneAccountIsAdded()
         {
             var result = await _accountsController.GetAsync();
-            var accounts = GetObjectResultContent<IEnumerable<Models.Account>>(result);
+            var accounts = TestHelpers.GetObjectResultContent<IEnumerable<Models.Account>>(result);
             Assert.That(accounts, Is.Empty);
 
             await _accountsController.RecordAsync(new Models.Account
@@ -64,7 +63,7 @@ namespace Spawn.Demo.WebApi.Tests
             });
 
             result = await _accountsController.GetAsync();
-            accounts = GetObjectResultContent<IEnumerable<Models.Account>>(result);
+            accounts = TestHelpers.GetObjectResultContent<IEnumerable<Models.Account>>(result);
             Assert.That(accounts, Is.Not.Empty);
             Assert.That(accounts.Count(), Is.EqualTo(1));
         }
@@ -79,7 +78,7 @@ namespace Spawn.Demo.WebApi.Tests
             });
 
             var result = await _accountsController.GetAsync();
-            var accounts = GetObjectResultContent<IEnumerable<Models.Account>>(result);
+            var accounts = TestHelpers.GetObjectResultContent<IEnumerable<Models.Account>>(result);
             Assert.That(accounts, Is.Not.Empty);
             Assert.That(accounts.Count(), Is.EqualTo(1));
 
@@ -87,7 +86,7 @@ namespace Spawn.Demo.WebApi.Tests
             await _accountsController.DeleteAsync(foundAccount);
 
             result = await _accountsController.GetAsync();
-            accounts = GetObjectResultContent<IEnumerable<Models.Account>>(result);
+            accounts = TestHelpers.GetObjectResultContent<IEnumerable<Models.Account>>(result);
             Assert.That(accounts, Is.Empty);
         }
 
@@ -101,7 +100,7 @@ namespace Spawn.Demo.WebApi.Tests
             });
 
             var result = await _accountsController.GetAsync();
-            var accounts = GetObjectResultContent<IEnumerable<Models.Account>>(result);
+            var accounts = TestHelpers.GetObjectResultContent<IEnumerable<Models.Account>>(result);
             Assert.That(accounts, Is.Not.Empty);
             Assert.That(accounts.Count(), Is.EqualTo(1));
 
@@ -113,31 +112,12 @@ namespace Spawn.Demo.WebApi.Tests
             await _accountsController.PutAsync(foundAccount);
 
             result = await _accountsController.GetAsync();
-            accounts = GetObjectResultContent<IEnumerable<Models.Account>>(result);
+            accounts = TestHelpers.GetObjectResultContent<IEnumerable<Models.Account>>(result);
             Assert.That(accounts, Is.Not.Empty);
             Assert.That(accounts.Count(), Is.EqualTo(1));
 
             var updatedAccount = accounts.ElementAt(0);
             Assert.That(updatedAccount.Email, Is.EqualTo(updatedEmail));
-        }
-
-        private static T GetObjectResultContent<T>(ActionResult<T> result)
-        {
-            return (T)((ObjectResult)result.Result).Value;
-        }
-
-        private ClaimsPrincipal GetUser(string name)
-        {
-            var user = new ClaimsPrincipal();
-            user.AddIdentities(new[]
-            {
-              new ClaimsIdentity(new[]
-              {
-                new Claim(ClaimTypes.NameIdentifier, name)
-              })
-            });
-
-            return user;
         }
     }
 }
