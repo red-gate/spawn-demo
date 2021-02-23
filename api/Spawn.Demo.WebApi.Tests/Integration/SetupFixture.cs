@@ -40,11 +40,12 @@ namespace Spawn.Demo.WebApi.Tests
         }
 
         [OneTimeTearDown]
-        public async Task DeleteDataImages()
+        public void DeleteDataImages()
         {
-            var deleteAccount = Task.Run(() => _spawnClient.DeleteDataImage(AccountDataImageName));
-            var deleteTodo = Task.Run(() => _spawnClient.DeleteDataImage(TodoDataImageName));
-            await Task.WhenAll(deleteAccount, deleteTodo);
+            // Don't wait for these tasks to complete
+            // We'll let spawn handle the background deletion
+            Task.Run(() => _spawnClient.DeleteDataImage(AccountDataImageName));
+            Task.Run(() => _spawnClient.DeleteDataImage(TodoDataImageName));
         }
     }
 }

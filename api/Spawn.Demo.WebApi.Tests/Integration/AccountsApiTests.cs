@@ -46,7 +46,9 @@ namespace Spawn.Demo.WebApi.Tests
         [TearDown]
         public void Teardown()
         {
-            _spawnClient.DeleteDataContainer(_accountsDataContainer);
+            // Don't wait for this task to complete
+            // We'll let spawn handle the background deletion
+            Task.Run(() => _spawnClient.DeleteDataContainer(_accountsDataContainer));
         }
 
         [Test]

@@ -56,11 +56,12 @@ namespace Spawn.Demo.WebApi.Tests
         }
 
         [TearDown]
-        public async Task Teardown()
+        public void Teardown()
         {
-            var deleteTodoTask = Task.Run(() => _spawnClient.DeleteDataContainer(_todoDataContainer));
-            var deleteAccounTask = Task.Run(() => _spawnClient.DeleteDataContainer(_accountDataContainer));
-            await Task.WhenAll(deleteTodoTask, deleteAccounTask);
+            // Don't wait for these tasks to complete
+            // We'll let spawn handle the background deletion
+            Task.Run(() => _spawnClient.DeleteDataContainer(_todoDataContainer));
+            Task.Run(() => _spawnClient.DeleteDataContainer(_accountDataContainer));
         }
 
         [Test]
