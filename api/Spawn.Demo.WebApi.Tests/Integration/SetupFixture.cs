@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using Spawn.Demo.WebApi.Tests.Spawnctl;
 
+[assembly: LevelOfParallelism(10)]
 namespace Spawn.Demo.WebApi.Tests
 {
     [SetUpFixture]
