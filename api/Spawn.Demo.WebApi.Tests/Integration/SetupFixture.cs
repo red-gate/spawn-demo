@@ -16,7 +16,7 @@ namespace Spawn.Demo.WebApi.Tests
 
         public SetupFixture()
         {
-            _spawnClient = new SpawnClient(TestContext.Out);
+            _spawnClient = new SpawnClient(TestContext.Progress);
         }
 
         [OneTimeSetUp]
