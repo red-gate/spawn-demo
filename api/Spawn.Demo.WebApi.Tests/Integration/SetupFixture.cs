@@ -25,8 +25,14 @@ namespace Spawn.Demo.WebApi.Tests
             var accountImageName = Environment.GetEnvironmentVariable("ACCOUNT_IMAGE_NAME");
             var todoImageName = Environment.GetEnvironmentVariable("TODO_IMAGE_NAME");
 
-            AccountDataImageName = string.IsNullOrEmpty(accountImageName) ? "demo-account-test" : accountImageName;
-            TodoDataImageName = string.IsNullOrEmpty(todoImageName) ? "demo-todo-test" : todoImageName;
+            accountImageName = string.IsNullOrEmpty(accountImageName) ? "demo-account-test" : accountImageName;
+            todoImageName = string.IsNullOrEmpty(todoImageName) ? "demo-todo-test" : todoImageName;
+
+            var accountTagName = Environment.GetEnvironmentVariable("ACCOUNT_TAG_NAME");
+            var todoTagName = Environment.GetEnvironmentVariable("TODO_TAG_NAME");
+
+            accountTagName = string.IsNullOrEmpty(accountTagName) ? "local" : accountTagName;
+            todoTagName = string.IsNullOrEmpty(todoTagName) ? "local" : todoTagName;
 
             var accountImageYamlFilepath = Environment.GetEnvironmentVariable("ACCOUNT_IMAGE_YAML_FILEPATH");
             var todoImageYamlFilepath = Environment.GetEnvironmentVariable("TODO_IMAGE_YAML_FILEPATH");
@@ -34,9 +40,12 @@ namespace Spawn.Demo.WebApi.Tests
             accountImageYamlFilepath = string.IsNullOrEmpty(accountImageYamlFilepath) ? "../../../../../database/account/spawn/test.yaml" : accountImageYamlFilepath;
             todoImageYamlFilepath = string.IsNullOrEmpty(todoImageYamlFilepath) ? "../../../../../database/todo/spawn/test.yaml" : todoImageYamlFilepath;
 
-            var createAccount = Task.Run(() => _spawnClient.CreateDataImage(accountImageYamlFilepath, "-n", AccountDataImageName));
-            var createTodo = Task.Run(() => _spawnClient.CreateDataImage(todoImageYamlFilepath, "-n", TodoDataImageName));
+            var createAccount = Task.Run(() => _spawnClient.CreateDataImage(accountImageYamlFilepath, "-n", accountImageName, "--tag", accountTagName));
+            var createTodo = Task.Run(() => _spawnClient.CreateDataImage(todoImageYamlFilepath, "-n", todoImageName, "--tag", todoTagName));
             await Task.WhenAll(createAccount, createTodo);
+
+            AccountDataImageName = $"{accountImageName}:{accountTagName}";
+            TodoDataImageName = $"{todoImageName}:{todoTagName}";
         }
 
         [OneTimeTearDown]
