@@ -15,6 +15,8 @@ namespace Spawn.Demo.WebApi.Tests
         private readonly SpawnClient _spawnClient;
         public static string AccountDataImageName = null;
         public static string TodoDataImageName = null;
+        public static string AccountDataImageTag = null;
+        public static string TodoDataImageTag = null;
 
         public SetupFixture()
         {
@@ -48,6 +50,8 @@ namespace Spawn.Demo.WebApi.Tests
 
             AccountDataImageName = $"{accountImageName}:{accountTagName}";
             TodoDataImageName = $"{todoImageName}:{todoTagName}";
+            AccountDataImageTag = accountTagName;
+            TodoDataImageTag = todoTagName;
         }
 
         [OneTimeTearDown]

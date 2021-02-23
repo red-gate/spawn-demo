@@ -10,6 +10,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
+using NUnit.Framework.Interfaces;
 
 namespace Spawn.Demo.WebApi.Tests
 {
@@ -46,6 +47,10 @@ namespace Spawn.Demo.WebApi.Tests
         [TearDown]
         public void Teardown()
         {
+            if(TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
+            {
+              _spawnClient.CreateImageFromCurrentContainerState(_accountsDataContainer, $"account-{TestContext.CurrentContext.Test.ID}", "--tag", SetupFixture.AccountDataImageTag, "--team", "red-gate:sharks");
+            }
             // Don't wait for this task to complete
             // We'll let spawn handle the background deletion
             Task.Run(() => _spawnClient.DeleteDataContainer(_accountsDataContainer));
