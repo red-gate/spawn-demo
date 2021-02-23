@@ -87,7 +87,7 @@ mode=$?
 if [[ $mode == $DOCKER_BINARY ]]; then
     accountHost=$(translateHost $accountHost)
     todoHost=$(translateHost $todoHost)
-    docker pull boxfuse/flyway
+    docker pull boxfuse/flyway > /dev/null 2>&1
 fi
 set -e
 
