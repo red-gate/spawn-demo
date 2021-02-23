@@ -40,8 +40,8 @@ namespace Spawn.Demo.WebApi.Tests
             accountImageYamlFilepath = string.IsNullOrEmpty(accountImageYamlFilepath) ? "../../../../../database/account/spawn/test.yaml" : accountImageYamlFilepath;
             todoImageYamlFilepath = string.IsNullOrEmpty(todoImageYamlFilepath) ? "../../../../../database/todo/spawn/test.yaml" : todoImageYamlFilepath;
 
-            var createAccount = Task.Run(() => _spawnClient.CreateDataImage(accountImageYamlFilepath, "-n", accountImageName, "--tag", accountTagName));
-            var createTodo = Task.Run(() => _spawnClient.CreateDataImage(todoImageYamlFilepath, "-n", todoImageName, "--tag", todoTagName));
+            var createAccount = Task.Run(() => _spawnClient.CreateDataImage(accountImageYamlFilepath, accountImageName, accountTagName));
+            var createTodo = Task.Run(() => _spawnClient.CreateDataImage(todoImageYamlFilepath, todoImageName, todoTagName));
             await Task.WhenAll(createAccount, createTodo);
 
             AccountDataImageName = $"{accountImageName}:{accountTagName}";

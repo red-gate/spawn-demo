@@ -18,13 +18,14 @@ namespace Spawn.Demo.WebApi.Tests.Spawnctl
             _logger = logger;
         }
 
-        public string CreateDataImage(string imageDefinitionFilepath, params string[] extraArgs)
+        public string CreateDataImage(string imageDefinitionFilepath, string imageName, string tag, params string[] extraArgs)
         {
             _logger.WriteLine("🛸 Creating spawn data image...");
-            var args = new List<string> { "create", "data-image", "-f", imageDefinitionFilepath };
+
+            var args = new List<string> { "create", "data-image", "-f", imageDefinitionFilepath, "--name", imageName, "--tag", tag };
             args.AddRange(extraArgs);
             var dataImage = RunSpawnctl(args.ToArray());
-            _logger.WriteLine($"🛸 Successfully created spawn data image {dataImage}");
+            _logger.WriteLine($"🛸 Successfully created spawn data image '{imageName}:{tag}'");
             return dataImage;
         }
 
