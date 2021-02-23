@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
 
     <IsPackable>false</IsPackable>
+    <NoWarn>4014,1998</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
