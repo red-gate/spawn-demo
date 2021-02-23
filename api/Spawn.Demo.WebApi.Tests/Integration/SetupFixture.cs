@@ -10,6 +10,8 @@ namespace Spawn.Demo.WebApi.Tests
     [SetUpFixture]
     public class SetupFixture
     {
+        private const string DefaultAccountYamlFilepath = "../../../../../database/account/spawn/test.yaml";
+        private const string DefaultTodoYamlFilepath = "../../../../../database/todo/spawn/test.yaml";
         private readonly SpawnClient _spawnClient;
         public static string AccountDataImageName = null;
         public static string TodoDataImageName = null;
@@ -37,8 +39,8 @@ namespace Spawn.Demo.WebApi.Tests
             var accountImageYamlFilepath = Environment.GetEnvironmentVariable("ACCOUNT_IMAGE_YAML_FILEPATH");
             var todoImageYamlFilepath = Environment.GetEnvironmentVariable("TODO_IMAGE_YAML_FILEPATH");
 
-            accountImageYamlFilepath = string.IsNullOrEmpty(accountImageYamlFilepath) ? "../../../../../database/account/spawn/test.yaml" : accountImageYamlFilepath;
-            todoImageYamlFilepath = string.IsNullOrEmpty(todoImageYamlFilepath) ? "../../../../../database/todo/spawn/test.yaml" : todoImageYamlFilepath;
+            accountImageYamlFilepath = string.IsNullOrEmpty(accountImageYamlFilepath) ? DefaultAccountYamlFilepath : accountImageYamlFilepath;
+            todoImageYamlFilepath = string.IsNullOrEmpty(todoImageYamlFilepath) ? DefaultTodoYamlFilepath : todoImageYamlFilepath;
 
             var createAccount = Task.Run(() => _spawnClient.CreateDataImage(accountImageYamlFilepath, accountImageName, accountTagName));
             var createTodo = Task.Run(() => _spawnClient.CreateDataImage(todoImageYamlFilepath, todoImageName, todoTagName));
