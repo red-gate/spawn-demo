@@ -57,12 +57,19 @@ namespace Spawn.Demo.WebApi.Tests
         [Test]
         public async Task WhenInsertingAndFindingTodoItem_ThenThisOperationIsCompleteInUnderFiveSecond()
         {
-            const string existingTaskText = "this is my task text to find";
             var stopWatch = Stopwatch.StartNew();
-            var result = await _todoController.FindUserTodoItemAsync(existingTaskText);
+            const string taskText = "my newly added todo item";
+            var httpResult = await _todoController.RecordAsync(new Models.TodoItem(){
+                CreatedAt = DateTime.Now,
+                Done = true,
+                Task = taskText,
+            });
+            Assert.That(httpResult, Is.InstanceOf(typeof(OkObjectResult)));
+            
+            var result = await _todoController.FindUserTodoItemAsync(taskText);
             stopWatch.Stop();
             
-            Assert.That(stopWatch.ElapsedMilliseconds, Is.LessThan(3000), "Finding a users todo item did not complete in less than 5 second");
+            Assert.That(stopWatch.ElapsedMilliseconds, Is.LessThan(5000), "Finding a users todo item did not complete in less than 5 second");
         }
    }
 }
