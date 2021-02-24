@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Diagnostics;
+using NUnit.Framework.Interfaces;
 
 namespace Spawn.Demo.WebApi.Tests
 {
@@ -48,7 +49,10 @@ namespace Spawn.Demo.WebApi.Tests
         [TearDown]
         public async Task Teardown()
         {
-            GithubActionsHelpers.LogError($"Test '{TestContext.CurrentContext.Test.Name}' failed. Error: {TestContext.CurrentContext.Result.Message}");
+            if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
+            {
+                GithubActionsHelpers.LogError($"Test '{TestContext.CurrentContext.Test.Name}' failed. Error: {TestContext.CurrentContext.Result.Message}");
+            }
             // Don't wait for these tasks to complete
             // We'll let spawn handle the background deletion
             Task.Run(() => _spawnClient.DeleteDataContainer(_todoDataContainer));
@@ -60,17 +64,18 @@ namespace Spawn.Demo.WebApi.Tests
         {
             var stopWatch = Stopwatch.StartNew();
             const string taskText = "my newly added todo item";
-            var httpResult = await _todoController.RecordAsync(new Models.TodoItem(){
+            var httpResult = await _todoController.RecordAsync(new Models.TodoItem()
+            {
                 CreatedAt = DateTime.Now,
                 Done = true,
                 Task = taskText,
             });
             Assert.That(httpResult, Is.InstanceOf(typeof(OkObjectResult)));
-            
+
             var result = await _todoController.FindUserTodoItemAsync(taskText);
             stopWatch.Stop();
-            
+
             Assert.That(stopWatch.ElapsedMilliseconds, Is.LessThan(5000), "Finding a users todo item did not complete in less than 5 second");
         }
-   }
+    }
 }
