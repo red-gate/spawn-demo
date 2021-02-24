@@ -1,0 +1,27 @@
+name: Integration tests
+
+on: workflow_dispatch
+
+jobs:
+  run_smoke_tests:
+    name: Run smoke tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - run: |
+          echo "Installing spawnctl..."
+          curl https://run.spawn.cc/install 2>/dev/null | sh > /dev/null 2>&1
+          export PATH=$PATH:$HOME/.spawnctl/bin
+          echo "spawnctl installed successfully"
+
+          echo
+          echo
+
+          echo "Starting integration tests..."
+          pushd api/Spawn.Demo.WebApi.Tests/
+          dotnet test -l "console;verbosity=detailed" --filter="Smoke"
+          popd
+        name: 'Run smoke tests with Spawn databases'
+        env:
+          SPAWNCTL_ACCESS_TOKEN: ${{ secrets.SPAWNCTL_ACCESS_TOKEN }}
