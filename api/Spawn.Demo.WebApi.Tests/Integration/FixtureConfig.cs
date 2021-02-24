@@ -1,10 +1,12 @@
 
+using System;
 using NUnit.Framework;
 using Spawn.Demo.WebApi.Tests.Spawnctl;
 
 [assembly: LevelOfParallelism(10)]
 namespace Spawn.Demo.WebApi.Tests
 {
+    [SetUpFixture]
     public class FixtureConfig
     {
         public static string AccountDataImageIdentifier = "demo-account:latest";

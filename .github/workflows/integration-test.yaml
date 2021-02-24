@@ -27,5 +27,4 @@ jobs:
           SPAWNCTL_ACCESS_TOKEN: ${{ secrets.SPAWNCTL_ACCESS_TOKEN }}
           ACCOUNT_IMAGE_NAME: spawn-demo-account-test
           TODO_IMAGE_NAME: spawn-demo-todo-test
-          ACCOUNT_TAG_NAME: ${{ github.run_number }}
-          TODO_TAG_NAME: ${{ github.run_number }}
+          TEST_TAG: ${{ github.run_number }}

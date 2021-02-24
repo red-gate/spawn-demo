@@ -31,7 +31,7 @@ namespace Spawn.Demo.WebApi.Tests
         [SetUp]
         public void Setup()
         {
-            _todoDataContainer = _spawnClient.CreateDataContainer(FixtureConfig.TodoDataImageName);
+            _todoDataContainer = _spawnClient.CreateDataContainer(FixtureConfig.TodoDataImageIdentifier);
 
             var todoConnString = _spawnClient.GetConnectionString(_todoDataContainer, SpawnClient.EngineType.Postgres);
             var logger = Substitute.For<ILogger>();
@@ -51,7 +51,7 @@ namespace Spawn.Demo.WebApi.Tests
         {
             if(TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
             {
-              _spawnClient.CreateImageFromCurrentContainerState(_todoDataContainer, $"todo-{TestContext.CurrentContext.Test.ID}", FixtureConfig.TodoDataImageTag, "--team", "red-gate:sharks");
+              _spawnClient.CreateImageFromCurrentContainerState(_todoDataContainer, $"todo-{TestContext.CurrentContext.Test.ID}", FixtureConfig.TestTag, "--team", "red-gate:sharks");
             }
             // Don't wait for these tasks to complete
             // We'll let spawn handle the background deletion
