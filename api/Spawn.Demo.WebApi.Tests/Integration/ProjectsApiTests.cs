@@ -34,11 +34,13 @@ namespace Spawn.Demo.WebApi.Tests
         [SetUp]
         public async Task Setup()
         {
-            var createTodoContainerTask = Task.Run(() => {
-              _todoDataContainer = _spawnClient.CreateDataContainer(FixtureConfig.TodoDataImageIdentifier);
+            var createTodoContainerTask = Task.Run(() =>
+            {
+                _todoDataContainer = _spawnClient.CreateDataContainer(FixtureConfig.TodoDataImageIdentifier);
             });
-            var createAccountContainerTask = Task.Run(() => {
-              _accountDataContainer = _spawnClient.CreateDataContainer(FixtureConfig.AccountDataImageIdentifier);
+            var createAccountContainerTask = Task.Run(() =>
+            {
+                _accountDataContainer = _spawnClient.CreateDataContainer(FixtureConfig.AccountDataImageIdentifier);
             });
 
             await Task.WhenAll(createTodoContainerTask, createAccountContainerTask);
@@ -50,7 +52,7 @@ namespace Spawn.Demo.WebApi.Tests
             var accountconnectionService = new AccountConnectionService(accountConnString, true);
             var projectStore = new ProjectStore(todoConnectionService, logger);
             var orgStore = new OrganizationStore(accountconnectionService, logger);
-            
+
             _projectsController = new ProjectsController(projectStore, orgStore, logger);
             _projectsController.ControllerContext = new ControllerContext()
             {
@@ -61,10 +63,17 @@ namespace Spawn.Demo.WebApi.Tests
         [TearDown]
         public async Task Teardown()
         {
-            if(TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
+            if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
             {
-              _spawnClient.CreateImageFromCurrentContainerState(_todoDataContainer, $"todo-{TestContext.CurrentContext.Test.ID}", FixtureConfig.TestTag, "--team", "red-gate:sharks");
-              _spawnClient.CreateImageFromCurrentContainerState(_accountDataContainer, $"account-{TestContext.CurrentContext.Test.ID}", FixtureConfig.TestTag, "--team", "red-gate:sharks");
+                var todoImageName = $"todo-{TestContext.CurrentContext.Test.ID}";
+                var accountImageName = $"account-{TestContext.CurrentContext.Test.ID}";
+                _spawnClient.CreateImageFromCurrentContainerState(_todoDataContainer, todoImageName, FixtureConfig.TestTag, "--team", "red-gate:sharks");
+                _spawnClient.CreateImageFromCurrentContainerState(_accountDataContainer, accountImageName, FixtureConfig.TestTag, "--team", "red-gate:sharks");
+                if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("GITHUB_WORKFLOW")))
+                {
+                    TestContext.Error.WriteLine($"##[error]: Test '{TestContext.CurrentContext.Test.Name}' failed. Spawn has created a data image called '{todoImageName}' to review for debugging the database state manually.");
+                    TestContext.Error.WriteLine($"##[error]: Test '{TestContext.CurrentContext.Test.Name}' failed. Spawn has created a data image called '{accountImageName}' to review for debugging the database state manually.");
+                }
             }
             // Don't wait for these tasks to complete
             // We'll let spawn handle the background deletion
@@ -82,8 +91,8 @@ namespace Spawn.Demo.WebApi.Tests
 
             await _projectsController.RecordAsync(new Models.Project
             {
-              CreatedAt = DateTime.Now,
-              Name = "TestProject1",
+                CreatedAt = DateTime.Now,
+                Name = "TestProject1",
             });
 
             result = await _projectsController.GetUserProjectsAsync();
@@ -97,8 +106,8 @@ namespace Spawn.Demo.WebApi.Tests
         {
             await _projectsController.RecordAsync(new Models.Project
             {
-              CreatedAt = DateTime.Now,
-              Name = "TestProject1",
+                CreatedAt = DateTime.Now,
+                Name = "TestProject1",
             });
 
             var result = await _projectsController.GetUserProjectsAsync();
@@ -118,8 +127,8 @@ namespace Spawn.Demo.WebApi.Tests
         {
             await _projectsController.RecordAsync(new Models.Project
             {
-              CreatedAt = DateTime.Now,
-              Name = "TestProject1",
+                CreatedAt = DateTime.Now,
+                Name = "TestProject1",
             });
 
             var result = await _projectsController.GetUserProjectsAsync();
