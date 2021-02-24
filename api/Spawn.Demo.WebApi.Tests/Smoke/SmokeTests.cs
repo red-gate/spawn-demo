@@ -12,6 +12,8 @@ using System.Diagnostics;
 
 namespace Spawn.Demo.WebApi.Tests
 {
+    [TestFixture]
+    [Category("Smoke")]
     public class SmokeTests
     {
         private const string SmokeTestUserId = "rtslikbz.rjntjthub@hqdevt.org";

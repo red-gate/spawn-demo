@@ -14,8 +14,10 @@ using NUnit.Framework.Interfaces;
 
 namespace Spawn.Demo.WebApi.Tests
 {
+    [TestFixture]
     [FixtureLifeCycle(LifeCycle.InstancePerTestCase)]
     [Parallelizable(ParallelScope.All)]
+    [Category("Integration")]
     public class AccountsApiTests
     {
         private const string TestUserId = "test@example.com";
