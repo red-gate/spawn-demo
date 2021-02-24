@@ -25,7 +25,7 @@ namespace Spawn.Demo.WebApi.Tests
 
         public SmokeTests()
         {
-            _spawnClient = new SpawnClient(TestContext.Out);
+            _spawnClient = new SpawnClient(TestContext.Progress);
         }
 
         [SetUp]
