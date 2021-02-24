@@ -3,8 +3,8 @@ name: Integration tests
 on: workflow_dispatch
 
 jobs:
-  run_integration_tests:
-    name: Run integration tests
+  run_smoke_tests:
+    name: Run smoke tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -20,9 +20,8 @@ jobs:
 
           echo "Starting integration tests..."
           pushd api/Spawn.Demo.WebApi.Tests/
-          dotnet test -l "console;verbosity=detailed" --filter="Integration"
+          dotnet test -l "console;verbosity=detailed" --filter="Smoke"
           popd
-        name: 'Run integration tests with Spawn databases'
+        name: 'Run smoke tests with Spawn databases'
         env:
           SPAWNCTL_ACCESS_TOKEN: ${{ secrets.SPAWNCTL_ACCESS_TOKEN }}
-          TEST_TAG: ${{ github.run_number }}

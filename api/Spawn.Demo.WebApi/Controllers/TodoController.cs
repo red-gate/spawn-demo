@@ -28,6 +28,12 @@ namespace Spawn.Demo.WebApi.Controllers
             return Ok(await _todoStore.GetTodoItemsAsync(this.GetUserId()));
         }
 
+        [HttpGet("/user/{taskText}")]
+        public async Task<ActionResult<TodoItem>> FindUserTodoItemAsync([FromRoute]string taskText)
+        {
+            return Ok(await _todoStore.FindUserTodoItemsAsync(this.GetUserId(), taskText));
+        }
+
         [HttpGet("user")]
         public async Task<ActionResult<IEnumerable<TodoItem>>> GetUserTodoItemsAsync()
         {

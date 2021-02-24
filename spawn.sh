@@ -107,13 +107,13 @@ function setupContainers() {
 
         echo
 
-        logSpawnMessage "Creating 'Todo' Spawn container"
+        logSpawnMessage "Creating 'Todo' Spawn container from image '$SPAWN_TODO_IMAGE_NAME'"
         spawnctl create data-container --image $SPAWN_TODO_IMAGE_NAME --name "$todoContainerName" -q > /dev/null
         logSpawnMessage "Spawn 'Todo' container '$todoContainerName' created from image '$SPAWN_TODO_IMAGE_NAME'"
         
         echo
 
-        logSpawnMessage "Creating 'Account' Spawn container"
+        logSpawnMessage "Creating 'Account' Spawn container from image '$SPAWN_ACCOUNT_IMAGE_NAME'"
         spawnctl create data-container --image $SPAWN_ACCOUNT_IMAGE_NAME --name "$accountContainerName" -q > /dev/null
         logSpawnMessage "Spawn 'Account' container '$accountContainerName' created from image '$SPAWN_ACCOUNT_IMAGE_NAME'"
     fi

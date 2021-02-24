@@ -14,8 +14,10 @@ using NUnit.Framework.Interfaces;
 
 namespace Spawn.Demo.WebApi.Tests
 {
+    [TestFixture]
     [FixtureLifeCycle(LifeCycle.InstancePerTestCase)]
     [Parallelizable(ParallelScope.All)]
+    [Category("Integration")]
     public class AccountsApiTests
     {
         private const string TestUserId = "test@example.com";
@@ -31,7 +33,7 @@ namespace Spawn.Demo.WebApi.Tests
         [SetUp]
         public void Setup()
         {
-            _accountsDataContainer = _spawnClient.CreateDataContainer(SetupFixture.AccountDataImageName);
+            _accountsDataContainer = _spawnClient.CreateDataContainer(FixtureConfig.AccountDataImageIdentifier);
             var connString = _spawnClient.GetConnectionString(_accountsDataContainer, SpawnClient.EngineType.MSSQL);
             var logger = Substitute.For<ILogger>();
             var accountConnectionService = new AccountConnectionService(connString, true);
@@ -49,7 +51,7 @@ namespace Spawn.Demo.WebApi.Tests
         {
             if(TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
             {
-              _spawnClient.CreateImageFromCurrentContainerState(_accountsDataContainer, $"account-{TestContext.CurrentContext.Test.ID}", SetupFixture.AccountDataImageTag, "--team", "red-gate:sharks");
+              _spawnClient.CreateImageFromCurrentContainerState(_accountsDataContainer, $"account-{TestContext.CurrentContext.Test.ID}", FixtureConfig.TestTag, "--team", "red-gate:sharks");
             }
             // Don't wait for this task to complete
             // We'll let spawn handle the background deletion
