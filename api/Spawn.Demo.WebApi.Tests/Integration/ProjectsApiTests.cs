@@ -33,10 +33,10 @@ namespace Spawn.Demo.WebApi.Tests
         public async Task Setup()
         {
             var createTodoContainerTask = Task.Run(() => {
-              _todoDataContainer = _spawnClient.CreateDataContainer(SetupFixture.TodoDataImageName);
+              _todoDataContainer = _spawnClient.CreateDataContainer(FixtureConfig.TodoDataImageName);
             });
             var createAccountContainerTask = Task.Run(() => {
-              _accountDataContainer = _spawnClient.CreateDataContainer(SetupFixture.AccountDataImageName);
+              _accountDataContainer = _spawnClient.CreateDataContainer(FixtureConfig.AccountDataImageName);
             });
 
             await Task.WhenAll(createTodoContainerTask, createAccountContainerTask);
@@ -61,8 +61,8 @@ namespace Spawn.Demo.WebApi.Tests
         {
             if(TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
             {
-              _spawnClient.CreateImageFromCurrentContainerState(_todoDataContainer, $"todo-{TestContext.CurrentContext.Test.ID}", SetupFixture.TodoDataImageTag, "--team", "red-gate:sharks");
-              _spawnClient.CreateImageFromCurrentContainerState(_accountDataContainer, $"account-{TestContext.CurrentContext.Test.ID}", SetupFixture.AccountDataImageTag, "--team", "red-gate:sharks");
+              _spawnClient.CreateImageFromCurrentContainerState(_todoDataContainer, $"todo-{TestContext.CurrentContext.Test.ID}", FixtureConfig.TodoDataImageTag, "--team", "red-gate:sharks");
+              _spawnClient.CreateImageFromCurrentContainerState(_accountDataContainer, $"account-{TestContext.CurrentContext.Test.ID}", FixtureConfig.AccountDataImageTag, "--team", "red-gate:sharks");
             }
             // Don't wait for these tasks to complete
             // We'll let spawn handle the background deletion

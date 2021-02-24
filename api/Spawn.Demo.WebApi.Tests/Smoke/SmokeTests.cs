@@ -15,7 +15,7 @@ namespace Spawn.Demo.WebApi.Tests
     public class SmokeTests
     {
         private const string SmokeTestUserId = "rtslikbz.rjntjthub@hqdevt.org";
-        private const string SmokeTestDataImage = "demo-todo-large";
+        private const string SmokeTestDataImage = "demo-todo:large";
         private readonly SpawnClient _spawnClient;
         private TodoController _todoController;
         private string _todoDataContainer = null;
