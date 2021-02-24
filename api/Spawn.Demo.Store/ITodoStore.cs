@@ -13,5 +13,6 @@ namespace Spawn.Demo.Store
         Task<TodoItem> StoreTodoItemAsync(string userId, TodoItem item);
         Task RemoveTodoItemAsync(string userId, int id);
         Task ModifyTodoItemAsync(string userId, TodoItem item);
+        Task<TodoItem> FindUserTodoItemsAsync(string userId, string taskText);
     }
 }

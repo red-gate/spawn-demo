@@ -57,6 +57,11 @@ namespace Spawn.Demo.Store
             await RunWithRetryAsync(() => DeleteTodoItem(userId, id));
         }
 
+        public async Task<TodoItem> FindUserTodoItemsAsync(string userId, string taskText)
+        {
+            return await RunWithRetryAsync(() => FindUserTodoItem(userId, taskText));
+        }
+
         private TodoItem InsertTodoItem(string userId, TodoItem item)
         {
             using (IDbConnection connection = new NpgsqlConnection(_connString))
@@ -134,6 +139,18 @@ FROM todo_list
 WHERE userId = @userId
 AND projectId IS NULL;", new {userId});
                 return todoItem;
+            }
+        }
+
+        private TodoItem FindUserTodoItem(string userId, string taskText)
+        {
+            using (var conn = new NpgsqlConnection(_connString))
+            {
+                var foundTodo = conn.QuerySingleOrDefault<TodoItem>(@"SELECT id, userId, task, done, createdAt, projectId 
+FROM todo_list 
+WHERE userId = @userId 
+AND task = @taskText", new { userId = userId, taskText = taskText });
+                return foundTodo;
             }
         }
 
