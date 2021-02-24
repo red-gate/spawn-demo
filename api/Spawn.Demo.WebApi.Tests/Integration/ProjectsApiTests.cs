@@ -67,8 +67,8 @@ namespace Spawn.Demo.WebApi.Tests
             {
                 var todoImageName = $"todo-{TestContext.CurrentContext.Test.ID}";
                 var accountImageName = $"account-{TestContext.CurrentContext.Test.ID}";
-                _spawnClient.CreateImageFromCurrentContainerState(_todoDataContainer, todoImageName, FixtureConfig.TestTag, "--team", "red-gate:sharks");
-                _spawnClient.CreateImageFromCurrentContainerState(_accountDataContainer, accountImageName, FixtureConfig.TestTag, "--team", "red-gate:sharks");
+                _spawnClient.CreateImageFromCurrentContainerState(_todoDataContainer, todoImageName, FixtureConfig.TestTag, "--team", "red-gate:spawn");
+                _spawnClient.CreateImageFromCurrentContainerState(_accountDataContainer, accountImageName, FixtureConfig.TestTag, "--team", "red-gate:spawn");
                 GithubActionsHelpers.LogError($"Test '{TestContext.CurrentContext.Test.Name}' failed. Spawn has created a data image called '{todoImageName}:{FixtureConfig.TestTag}' to review for debugging the database state manually.");
                 GithubActionsHelpers.LogError($"Test '{TestContext.CurrentContext.Test.Name}' failed. Spawn has created a data image called '{accountImageName}:{FixtureConfig.TestTag}' to review for debugging the database state manually.");
             }

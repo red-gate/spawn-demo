@@ -52,7 +52,7 @@ namespace Spawn.Demo.WebApi.Tests
             if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
             {
                 var graduatedImageName = $"account-{TestContext.CurrentContext.Test.ID}";
-                _spawnClient.CreateImageFromCurrentContainerState(_accountsDataContainer, graduatedImageName, FixtureConfig.TestTag, "--team", "red-gate:sharks");
+                _spawnClient.CreateImageFromCurrentContainerState(_accountsDataContainer, graduatedImageName, FixtureConfig.TestTag, "--team", "red-gate:spawn");
                 GithubActionsHelpers.LogError($"Test '{TestContext.CurrentContext.Test.Name}' failed. Spawn data image '{graduatedImageName}:{FixtureConfig.TestTag}' created for debugging the database state.");
             }
             // Don't wait for this task to complete
