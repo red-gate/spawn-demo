@@ -9,7 +9,7 @@ namespace Spawn.Demo.WebApi.Tests
         {
             if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("GITHUB_WORKFLOW")))
             {
-                TestContext.Error.WriteLine($"##[error]: {message}");
+                TestContext.WriteLine($"##[error]{message}");
             }
         }
     }

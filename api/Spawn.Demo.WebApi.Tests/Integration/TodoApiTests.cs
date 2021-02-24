@@ -54,7 +54,6 @@ namespace Spawn.Demo.WebApi.Tests
         {
             if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
             {
-                GithubActionsHelpers.LogError($"Test '{TestContext.CurrentContext.Test.Name}' failed. Error: {TestContext.CurrentContext.Result.Message}");
                 var graduatedImageName = $"todo-{TestContext.CurrentContext.Test.ID}";
                 _spawnClient.CreateImageFromCurrentContainerState(_todoDataContainer, graduatedImageName, FixtureConfig.TestTag, "--team", "red-gate:sharks");
                 GithubActionsHelpers.LogError($"Test '{TestContext.CurrentContext.Test.Name}' failed. Spawn has created a data image called '{graduatedImageName}' to review for debugging the database state manually.");

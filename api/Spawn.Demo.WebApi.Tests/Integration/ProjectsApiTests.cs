@@ -65,7 +65,6 @@ namespace Spawn.Demo.WebApi.Tests
         {
             if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
             {
-                GithubActionsHelpers.LogError($"Test '{TestContext.CurrentContext.Test.Name}' failed. Error: {TestContext.CurrentContext.Result.Message}");
                 var todoImageName = $"todo-{TestContext.CurrentContext.Test.ID}";
                 var accountImageName = $"account-{TestContext.CurrentContext.Test.ID}";
                 _spawnClient.CreateImageFromCurrentContainerState(_todoDataContainer, todoImageName, FixtureConfig.TestTag, "--team", "red-gate:sharks");
