@@ -20,7 +20,7 @@ jobs:
 
           echo "Starting integration tests..."
           pushd api/Spawn.Demo.WebApi.Tests/
-          dotnet test -l "console;verbosity=detailed" --filter="Integration"
+          dotnet test -l "console;verbosity=detailed" --filter="TestCategory=Integration"
           popd
         name: 'Run integration tests with Spawn databases'
         env:

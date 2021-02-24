@@ -20,7 +20,7 @@ jobs:
 
           echo "Starting Smoke tests..."
           pushd api/Spawn.Demo.WebApi.Tests/
-          dotnet test -l "console;verbosity=detailed" --filter="Smoke"
+          dotnet test -l "console;verbosity=detailed" --filter="TestCategory=Smoke"
           popd
         name: 'Run smoke tests with Spawn databases'
         env:
