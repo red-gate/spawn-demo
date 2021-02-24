@@ -52,6 +52,7 @@ namespace Spawn.Demo.WebApi.Tests
         [TearDown]
         public async Task Teardown()
         {
+            TestContext.Error.WriteLine($"##[error]: Test '{TestContext.CurrentContext.Test.Name}' failed. Error: {TestContext.CurrentContext.Result.Message}");
             if(TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
             {
                 var graduatedImageName = $"todo-{TestContext.CurrentContext.Test.ID}";
