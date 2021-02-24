@@ -25,6 +25,4 @@ jobs:
         name: 'Run integration tests with Spawn databases'
         env:
           SPAWNCTL_ACCESS_TOKEN: ${{ secrets.SPAWNCTL_ACCESS_TOKEN }}
-          ACCOUNT_IMAGE_NAME: spawn-demo-account-test
-          TODO_IMAGE_NAME: spawn-demo-todo-test
           TEST_TAG: ${{ github.run_number }}
