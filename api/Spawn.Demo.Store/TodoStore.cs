@@ -109,7 +109,7 @@ AND id = @id;", new
                 var todoItems = conn.Query<TodoItem>(
                     @"SELECT id, userId, task, done, createdAt, projectId
 FROM todo_list
-WHERE userId = @userId;", new {userId});
+WHERE userId = @userId;", new { userId });
                 _logger.Information("Found {count} records", todoItems.Count());
                 return todoItems;
             }
@@ -123,7 +123,7 @@ WHERE userId = @userId;", new {userId});
                     @"SELECT id, userId, task, done, createdAt, projectId
 FROM todo_list
 WHERE userId = @userId
-AND id = @id;", new {userId, id});
+AND id = @id;", new { userId, id });
                 return todoItem;
             }
         }
@@ -137,7 +137,7 @@ AND id = @id;", new {userId, id});
                     @"SELECT id, userId, task, done, createdAt, projectId
 FROM todo_list
 WHERE userId = @userId
-AND projectId IS NULL;", new {userId});
+AND projectId IS NULL;", new { userId });
                 return todoItem;
             }
         }
@@ -162,7 +162,7 @@ AND task = @taskText", new { userId = userId, taskText = taskText });
                     @"SELECT id, userId, task, done, createdAt, projectId
 FROM todo_list
 WHERE userId = @userId
-AND projectId = @projectId;", new {userId, projectId});
+AND projectId = @projectId;", new { userId, projectId });
                 return todoItem;
             }
         }
@@ -173,7 +173,7 @@ AND projectId = @projectId;", new {userId, projectId});
             {
                 var rows = conn.Execute(
                     @"DELETE FROM todo_list
-WHERE userId = @userId;", new {userId, id});
+WHERE userId = @userId;", new { userId, id });
                 _logger.Information("Removed {count} records from todo_list", rows);
             }
         }
