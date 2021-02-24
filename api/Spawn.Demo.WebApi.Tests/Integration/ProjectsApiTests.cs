@@ -63,18 +63,15 @@ namespace Spawn.Demo.WebApi.Tests
         [TearDown]
         public async Task Teardown()
         {
-            TestContext.Error.WriteLine($"##[error]: Test '{TestContext.CurrentContext.Test.Name}' failed. Error: {TestContext.CurrentContext.Result.Message}");
             if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
             {
+                GithubActionsHelpers.LogError($"Test '{TestContext.CurrentContext.Test.Name}' failed. Error: {TestContext.CurrentContext.Result.Message}");
                 var todoImageName = $"todo-{TestContext.CurrentContext.Test.ID}";
                 var accountImageName = $"account-{TestContext.CurrentContext.Test.ID}";
                 _spawnClient.CreateImageFromCurrentContainerState(_todoDataContainer, todoImageName, FixtureConfig.TestTag, "--team", "red-gate:sharks");
                 _spawnClient.CreateImageFromCurrentContainerState(_accountDataContainer, accountImageName, FixtureConfig.TestTag, "--team", "red-gate:sharks");
-                if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("GITHUB_WORKFLOW")))
-                {
-                    TestContext.Error.WriteLine($"##[error]: Test '{TestContext.CurrentContext.Test.Name}' failed. Spawn has created a data image called '{todoImageName}' to review for debugging the database state manually.");
-                    TestContext.Error.WriteLine($"##[error]: Test '{TestContext.CurrentContext.Test.Name}' failed. Spawn has created a data image called '{accountImageName}' to review for debugging the database state manually.");
-                }
+                GithubActionsHelpers.LogError($"Test '{TestContext.CurrentContext.Test.Name}' failed. Spawn has created a data image called '{todoImageName}' to review for debugging the database state manually.");
+                GithubActionsHelpers.LogError($"Test '{TestContext.CurrentContext.Test.Name}' failed. Spawn has created a data image called '{accountImageName}' to review for debugging the database state manually.");
             }
             // Don't wait for these tasks to complete
             // We'll let spawn handle the background deletion

@@ -49,15 +49,12 @@ namespace Spawn.Demo.WebApi.Tests
         [TearDown]
         public async Task Teardown()
         {
-            TestContext.Error.WriteLine($"##[error]: Test '{TestContext.CurrentContext.Test.Name}' failed. Error: {TestContext.CurrentContext.Result.Message}");
             if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
             {
+                GithubActionsHelpers.LogError($"Test '{TestContext.CurrentContext.Test.Name}' failed. Error: {TestContext.CurrentContext.Result.Message}");
                 var graduatedImageName = $"account-{TestContext.CurrentContext.Test.ID}";
                 _spawnClient.CreateImageFromCurrentContainerState(_accountsDataContainer, graduatedImageName, FixtureConfig.TestTag, "--team", "red-gate:sharks");
-                if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("GITHUB_WORKFLOW")))
-                {
-                    TestContext.Error.WriteLine($"##[error]: Test '{TestContext.CurrentContext.Test.Name}' failed. Spawn has created a data image called '{graduatedImageName}' to review for debugging the database state manually.");
-                }
+                GithubActionsHelpers.LogError($"Test '{TestContext.CurrentContext.Test.Name}' failed. Spawn data image '{graduatedImageName}' created for debugging the database state.");
             }
             // Don't wait for this task to complete
             // We'll let spawn handle the background deletion
