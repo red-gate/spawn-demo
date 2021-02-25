@@ -60,7 +60,7 @@ namespace Spawn.Demo.WebApi.Tests
         }
 
         [Test]
-        public async Task WhenInsertingAndFindingTodoItem_ThenThisOperationIsCompleteInUnderFiveSecond()
+        public async Task WhenInsertingAndFindingTodoItem_ThenThisOperationIsCompleteInUnder500Ms()
         {
             var stopWatch = Stopwatch.StartNew();
             const string taskText = "my newly added todo item";
@@ -75,7 +75,7 @@ namespace Spawn.Demo.WebApi.Tests
             var result = await _todoController.FindUserTodoItemAsync(taskText);
             stopWatch.Stop();
 
-            Assert.That(stopWatch.ElapsedMilliseconds, Is.LessThan(5000), "Finding a users todo item did not complete in less than 5 second");
+            Assert.That(stopWatch.ElapsedMilliseconds, Is.LessThan(500), "Finding a users todo item did not complete in less than 500ms");
         }
     }
 }
