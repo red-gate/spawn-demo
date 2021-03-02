@@ -1,4 +1,5 @@
 sourceType: empty
 name: spawn-demo-account-empty
 engine: mssql
+version: 2017
 initialDatabaseName: spawndemoaccount 

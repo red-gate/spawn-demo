@@ -1,4 +1,5 @@
 sourceType: empty
 name: spawn-demo-todo-empty
 engine: postgresql
+version: 11.0
 initialDatabaseName: spawndemotodo
