@@ -1,6 +1,7 @@
 sourceType: scripts
 name: spawn-demo-account-test
 engine: mssql
+version: 2017
 initialDatabaseName: spawndemoaccount 
 scriptsFolders:
   - ../sql

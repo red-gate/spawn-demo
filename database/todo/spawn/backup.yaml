@@ -1,6 +1,7 @@
 sourceType: backup
 name: demo-todo
 engine: postgresql
+version: 11.0
 backup:
   folder: .
   file: demo_todo.bak

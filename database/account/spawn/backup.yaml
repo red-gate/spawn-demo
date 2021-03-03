@@ -1,6 +1,7 @@
 sourceType: backup
 name: demo-account
 engine: mssql
+version: 2017
 backup:
   folder: .
   file: demo_account.bak

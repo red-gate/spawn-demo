@@ -1,6 +1,7 @@
 sourceType: scripts
 name: spawn-demo-todo-test
 engine: postgresql
+version: 11.0
 initialDatabaseName: spawndemotodo
 scriptsFolders:
   - ../sql
