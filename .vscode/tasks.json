@@ -30,7 +30,7 @@
       }
     },
     {
-      "label": "Install frontend dependencies",
+      "label": "Install frontend dependencies1",
       "command": "yarn",
       "args": ["install"],
       "type": "process",
@@ -43,6 +43,44 @@
         "panel": "shared",
         "showReuseMessage": false
       }
+    },
+    {
+      "label": "Install frontend dependencies2",
+      "command": "yarn",
+      "args": ["build"],
+      "type": "process",
+      "options": {
+        "cwd": "${workspaceRoot}/client"
+      },
+      "presentation": {
+        "reveal": "silent",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": false
+      }
+    },
+    {
+      "label": "Install frontend dependencies3",
+      "command": "yarn",
+      "args": ["global", "add", "serve"],
+      "type": "process",
+      "options": {
+        "cwd": "${workspaceRoot}/client"
+      },
+      "presentation": {
+        "reveal": "silent",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": false
+      }
+    },
+    {
+      "label": "Install frontend dependencies",
+      "dependsOn": [
+        "Install frontend dependencies1",
+        "Install frontend dependencies2",
+        "Install frontend dependencies3",
+    ]
     }
   ]
 }

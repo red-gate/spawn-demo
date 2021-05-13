@@ -28,11 +28,13 @@
       "request": "launch",
       "cwd": "${workspaceRoot}/client",
       "runtimeArgs": [
-        "start"
+        "-s",
+        "build",
+        "-l",
+        "3000",
       ],
-      "runtimeExecutable": "yarn",
+      "runtimeExecutable": "serve",
       "stopOnEntry": false,
-      "port": 8080,
       "trace": false,
       "sourceMaps": false,
       "outputCapture": "std",
