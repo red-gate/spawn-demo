@@ -36,6 +36,7 @@
       "trace": false,
       "sourceMaps": false,
       "outputCapture": "std",
+      "autoAttachChildProcesses": false,
       "presentation": {
         "hidden": true
       }

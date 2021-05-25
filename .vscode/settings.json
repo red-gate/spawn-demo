@@ -1,4 +1,5 @@
 {
   "files.exclude": {
-  }
+  },
+  "terminal.integrated.fontSize": 16,
 }
