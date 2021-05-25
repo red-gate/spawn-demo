@@ -5,6 +5,12 @@
       "label": "Create Spawn Data Containers",
       "command": "source ${workspaceRoot}/.env && source ${workspaceRoot}/spawn.sh && validateImagesExist && setupContainers && migrateDatabases",
       "type": "shell",
+      "options": {
+        "shell": {
+          "executable": "bash",
+          "args": ["-c"]
+        }
+      },
       "presentation": {
         "echo": true,
         "reveal": "always",
