@@ -8,43 +8,31 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Install spawnctl
-        run: |
-          echo "Downloading and installing spawnctl..."
-          curl -sL https://run.spawn.cc/install | sh
+      - name: Create todo data container
+        id: create-todo-container
+        uses: red-gate/spawn-ci-plugins/github/data-container/create@main
+        with:
+          dataImage: demo-todo:latest
+          lifetime: '10m'
+      - name: Create account data container
+        id: create-account-container
+        uses: red-gate/spawn-ci-plugins/github/data-container/create@main
+        with:
+          dataImage: demo-account:latest
+          lifetime: '10m'
       - name: Run database migrations
         run: |
-          export PATH=$HOME/.spawnctl/bin:$PATH
-
-          export SPAWN_TODO_IMAGE_NAME=demo-todo:latest
-          export SPAWN_ACCOUNT_IMAGE_NAME=demo-account:latest
-
-          echo "Creating 'Todo' Spawn data container from image '$SPAWN_TODO_IMAGE_NAME'"
-          todoContainerName=$(spawnctl create data-container --image $SPAWN_TODO_IMAGE_NAME --lifetime 10m -q)
-          todoJson=$(spawnctl get data-container $todoContainerName -o json)
-          todoHost=$(echo $todoJson | jq -r '.host')
-          todoPort=$(echo $todoJson | jq -r '.port')
-          todoUsername=$(echo $todoJson | jq -r '.user')
-          todoPassword=$(echo $todoJson | jq -r '.password')
-          echo "Successfully created Spawn data container '$todoContainerName'"
-
-          echo
-          echo
-
-          echo "Creating 'Account' Spawn data container from image '$SPAWN_ACCOUNT_IMAGE_NAME'"
-          accountContainerName=$(spawnctl create data-container --image $SPAWN_ACCOUNT_IMAGE_NAME --lifetime 10m -q)
-          accountJson=$(spawnctl get data-container $accountContainerName -o json)
-          accountHost=$(echo $accountJson | jq -r '.host')
-          accountPort=$(echo $accountJson | jq -r '.port')
-          accountUsername=$(echo $accountJson | jq -r '.user')
-          accountPassword=$(echo $accountJson | jq -r '.password')
-          echo "Successfully created Spawn data container '$accountContainerName'"
-
-          echo
-          echo
-
-          ./migrate-db.sh $accountHost $accountPort $accountUsername $accountPassword $todoHost $todoPort $todoUsername $todoPassword
+          ./migrate-db.sh $ACCOUNT_HOST $ACCOUNT_PORT $ACCOUNT_USERNAME $ACCOUNT_PASSWORD $TODO_HOST $TODO_PORT $TODO_USERNAME $TODO_PASSWORD
 
           echo "Successfully migrated both 'Todo' and 'Account' databases"
         env:
-          SPAWNCTL_ACCESS_TOKEN: ${{ secrets.SPAWNCTL_ACCESS_TOKEN }} 
+          TODO_HOST: ${{ steps.create-todo-container.outputs.dataContainerHost }}
+          TODO_PORT: ${{ steps.create-todo-container.outputs.dataContainerPort }}
+          TODO_USERNAME: ${{ steps.create-todo-container.outputs.dataContainerUsername }}
+          TODO_PASSWORD: ${{ steps.create-todo-container.outputs.dataContainerPassword }}
+          ACCOUNT_HOST: ${{ steps.create-account-container.outputs.dataContainerHost }}
+          ACCOUNT_PORT: ${{ steps.create-account-container.outputs.dataContainerPort }}
+          ACCOUNT_USERNAME: ${{ steps.create-account-container.outputs.dataContainerUsername }}
+          ACCOUNT_PASSWORD: ${{ steps.create-account-container.outputs.dataContainerPassword }}
+    env:
+      SPAWNCTL_ACCESS_TOKEN: ${{ secrets.SPAWNCTL_ACCESS_TOKEN }}
