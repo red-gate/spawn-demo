@@ -10,13 +10,13 @@ jobs:
         uses: actions/checkout@v2
       - name: Create todo data container
         id: create-todo-container
-        uses: red-gate/spawn-ci-plugins/github/data-container/create@main
+        uses: red-gate/create-spawn-data-container@v1
         with:
           dataImage: demo-todo:latest
           lifetime: '10m'
       - name: Create account data container
         id: create-account-container
-        uses: red-gate/spawn-ci-plugins/github/data-container/create@main
+        uses: red-gate/create-spawn-data-container@v1
         with:
           dataImage: demo-account:latest
           lifetime: '10m'
