@@ -2,6 +2,4 @@
   "files.exclude": {
   },
   "terminal.integrated.fontSize": 16,
-  "editor.fontFamily": "Menlo, Monaco, 'Courier New', monospace",
-  "terminal.integrated.fontFamily": "Menlo, Monaco, 'Courier New', monospace"
 }
