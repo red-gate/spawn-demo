@@ -1,0 +1,12 @@
+image:
+  file: .gitpod.Dockerfile
+vscode:
+  extensions:
+    - ms-dotnettools.csharp
+tasks:
+  - name: Spawnctl Auth
+    command: |
+      echo 'You must authenticate to the Spawn service to run this example app'
+      echo ''
+      echo 'Open the URL presented below and follow the instructions to authenticate'
+      spawnctl auth
