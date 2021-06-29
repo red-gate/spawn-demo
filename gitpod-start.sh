@@ -24,18 +24,6 @@ validateImagesExist
 setupContainers
 migrateDatabases
 
-echo ''
-echo 'Building .NET app...'
-
-dotnet build ./api/Spawn.Demo.WebApi
-
-echo ''
-echo 'Restoring frontend dependencies...'
-
-pushd ./client
-yarn
-popd
-
 echo 'Environment set up successfully!'
 gp sync-done envsetup
 exit
