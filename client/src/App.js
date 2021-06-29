@@ -106,7 +106,7 @@ class App extends Component {
               <Route render={() => <Redirect to="/user/todo-items"/>}/>
             </Switch>
           </div>}
-        <div className='App-footer'>Redgate Foundry</div>
+        <a href="https://spawn.cc" target="_blank" className='App-footer'>Visit the Spawn homepage</a>
 
       </div >
     )

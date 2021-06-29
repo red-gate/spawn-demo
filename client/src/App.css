@@ -49,4 +49,17 @@
 
 .App-footer {
   padding-left: 1em;
+  display: flex;
+  justify-content: center;
+}
+
+a.App-footer {
+  color: #10a89d;
+  font-weight: bolder;
+  background-color: #42004b;
+}
+
+a.App-footer:hover {
+  color: #16f5e6;
+  font-weight: bolder;
 }
