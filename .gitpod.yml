@@ -6,3 +6,6 @@ vscode:
 tasks:
   - name: Setup environment
     command: bash gitpod-start.sh
+ports:
+  - port: 3000
+  - port: 5050
