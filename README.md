@@ -13,6 +13,12 @@ The application is a simple "Todo" application. It's architecture is as follows:
 
 ![architecture.png](./docs/architecture.png)
 
+## Running in GitPod
+
+Click the badge below to open this repository in GitPod with all of the dependencies installed and ready to go.
+
+[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/red-gate/spawn-demo)
+
 ## Running this locally
 
 To get up and running with this application, perform the following:

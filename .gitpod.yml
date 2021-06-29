@@ -1,0 +1,19 @@
+image:
+  file: .gitpod.Dockerfile
+vscode:
+  extensions:
+    - ms-dotnettools.csharp
+tasks:
+  - name: Run dotnet backend
+    command: dotnet run --project ./api/Spawn.Demo.WebApi
+    init: gp sync-await envsetup
+  - name: Run react frontend
+    command: cd client && REACT_APP_SPAWN_DEMO_ENDPOINT=$(gp url 5050) yarn start
+    init: gp sync-await envsetup
+    openMode: split-right
+  - name: Setup environment
+    command: bash gitpod-start.sh
+    openMode: tab-after
+ports:
+  - port: 3000
+  - port: 5050
