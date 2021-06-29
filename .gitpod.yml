@@ -6,6 +6,12 @@ vscode:
 tasks:
   - name: Setup environment
     command: bash gitpod-start.sh
+  - name: Run dotnet backend
+    command: dotnet run --project ./api/Spawn.Demo.WebApi
+    openMode: tab-after
+  - name: Run react frontend
+    command: cd client && REACT_APP_SPAWN_DEMO_ENDPOINT=$(gp url 5050) yarn start
+    openMode: split-right
 ports:
   - port: 3000
   - port: 5050

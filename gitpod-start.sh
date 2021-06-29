@@ -26,10 +26,3 @@ yarn
 popd
 
 echo 'Environment set up successfully!'
-echo 'In two separate terminals run:
-
-  dotnet run --project ./api/Spawn.Demo.WebApi
-
-  cd client && REACT_APP_SPAWN_DEMO_ENDPOINT=$(gp url 5050) yarn start
-  
-'
