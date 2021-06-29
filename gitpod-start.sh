@@ -26,3 +26,4 @@ yarn
 popd
 
 echo 'Environment set up successfully!'
+gp sync-done envsetup
