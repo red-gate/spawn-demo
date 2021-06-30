@@ -5,11 +5,11 @@ vscode:
     - ms-dotnettools.csharp
 tasks:
   - name: Run dotnet backend
-    command: dotnet run --project ./api/Spawn.Demo.WebApi
-    init: dotnet build ./api/Spawn.Demo.WebApi && gp sync-await envsetup
+    command: gp sync-await envsetup && dotnet run --project ./api/Spawn.Demo.WebApi
+    init: dotnet build ./api/Spawn.Demo.WebApi
   - name: Run react frontend
-    command: REACT_APP_SPAWN_DEMO_ENDPOINT=$(gp url 5050) yarn --cwd client/ start
-    init: yarn --cwd client/ && gp sync-await envsetup
+    command: gp sync-await envsetup && REACT_APP_SPAWN_DEMO_ENDPOINT=$(gp url 5050) yarn --cwd client/ start
+    init: yarn --cwd client/
     openMode: split-right
   - name: Setup environment
     command: bash gitpod-start.sh
