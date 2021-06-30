@@ -7,14 +7,28 @@ if ! spawnctl get data-images > /dev/null 2>&1 ; then
   echo ''
   echo -e "${RED}Open the URL presented below and follow the instructions to authenticate${NC}"
   echo ''
-  if ! spawnctl auth || ! spawnctl get data-images > /dev/null 2>&1 ; then
-    echo ''
-    echo -e "${RED}Error authenticating to Spawn.${NC}"
-    echo ''
-    echo -e "${RED}Please ensure you've already signed up to Spawn by running 'spawnctl onboard'${NC}"
-    echo ''
-    echo -e "${RED}Then re-run ./gitpod-start.sh${NC}"
+
+  if ! spawnctl auth ; then
+    echo -e "${RED}Unexpected error authenticating to Spawn.${NC}"
+    echo -e "${RED}Please re-run ./gitpod-start.sh "
     exit 1
+  fi
+
+  if ! spawnctl get data-images > /dev/null 2>&1; then
+    echo ''
+    echo -e "Creating Spawn account - please follow the prompts below."
+    echo ''
+    if ! spawnctl onboard ; then
+      echo -e "${RED}Onboarding failed.${NC}"
+      echo -e "${RED}Please re-run ./gitpod-start.sh or contact spawn@red-gate.com for assistance."
+      exit 1
+    fi
+    if ! spawnctl get data-images > /dev/null 2>&1; then
+        # check we can now get images after onboard
+        echo -e "${RED}Onboarding failed.${NC}"
+        echo -e "${RED}Please re-run ./gitpod-start.sh or contact spawn@red-gate.com for assistance."
+        exit 1
+    fi
   fi
 fi
 
