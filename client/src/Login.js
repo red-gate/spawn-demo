@@ -37,6 +37,7 @@ class Login extends Component {
             id="username"
             label="Email Address"
             name="username"
+            defaultValue="spawn@red-gate.com"
             autoFocus
           />
           <Button
