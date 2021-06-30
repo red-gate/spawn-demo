@@ -4,7 +4,7 @@ echo 'You must authenticate to the Spawn service to run this example app'
 echo ''
 echo 'Open the URL presented below and follow the instructions to authenticate'
 echo ''
-if ! spawnctl auth || ! spawnctl get data-images ; then
+if ! spawnctl auth || ! spawnctl get data-images > /dev/null 2>&1 ; then
   RED='\033[0;31m'
   NC='\033[0m' # No Color
   echo ''
