@@ -17,3 +17,12 @@ tasks:
 ports:
   - port: 3000
   - port: 5050
+github:
+  prebuilds:
+    master: true
+    branches: false
+    pullRequests: false
+    pullRequestsFromForks: false
+    addCheck: false
+    addComment: true
+    addBadge: false
