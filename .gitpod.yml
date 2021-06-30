@@ -6,10 +6,10 @@ vscode:
 tasks:
   - name: Run dotnet backend
     command: dotnet run --project ./api/Spawn.Demo.WebApi
-    init: gp sync-await envsetup
+    init: dotnet build ./api/Spawn.Demo.WebApi && gp sync-await envsetup
   - name: Run react frontend
-    command: cd client && REACT_APP_SPAWN_DEMO_ENDPOINT=$(gp url 5050) yarn start
-    init: gp sync-await envsetup
+    command: REACT_APP_SPAWN_DEMO_ENDPOINT=$(gp url 5050) yarn --cwd client/ start
+    init: yarn --cwd client/ && gp sync-await envsetup
     openMode: split-right
   - name: Setup environment
     command: bash gitpod-start.sh
@@ -17,3 +17,12 @@ tasks:
 ports:
   - port: 3000
   - port: 5050
+github:
+  prebuilds:
+    master: true
+    branches: false
+    pullRequests: false
+    pullRequestsFromForks: false
+    addCheck: false
+    addComment: true
+    addBadge: false
