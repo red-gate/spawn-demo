@@ -1,15 +1,15 @@
 {
 	"name": "Spawn Demo app devcontainer",
-  "build": {
-    "dockerfile": "Dockerfile"
-  },
-	"settings": {
-		"terminal.integrated.shell.linux": "/bin/bash"
+	"build": {
+		"dockerfile": "Dockerfile"
 	},
 	"extensions": [
 		"ms-dotnettools.csharp"
 	],
-	"forwardPorts": [5050, 3000],
+	"forwardPorts": [
+		5050,
+		3000
+	],
 	"mounts": [
 		"source=${localEnv:HOME}${localEnv:USERPROFILE}/.spawnctl/tokens.yaml,target=/root/.spawnctl/tokens.yaml,type=bind,consistency=cached",
 		"source=spawndemo-devcontainer-vscode-extensions,target=/root/.vscode-server/extensions,type=volume",
@@ -17,5 +17,15 @@
 	"remoteEnv": {
 		"SPAWNCTL_ACCESS_TOKEN": "${localEnv:SPAWNCTL_ACCESS_TOKEN}"
 	},
-	"initializeCommand": ["docker", "run", "--rm", "-v", "${localEnv:HOME}${localEnv:USERPROFILE}:/homedir", "busybox", "sh", "-c", "mkdir -p /homedir/.spawnctl/ && touch /homedir/.spawnctl/tokens.yaml"],
+	"initializeCommand": [
+		"docker",
+		"run",
+		"--rm",
+		"-v",
+		"${localEnv:HOME}${localEnv:USERPROFILE}:/homedir",
+		"busybox",
+		"sh",
+		"-c",
+		"mkdir -p /homedir/.spawnctl/ && touch /homedir/.spawnctl/tokens.yaml"
+	],
 }
