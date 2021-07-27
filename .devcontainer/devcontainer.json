@@ -1,5 +1,5 @@
 {
-	"name": "Spawn Demo app devcontainer",
+	"name": "Spawn Demo app codespaces",
 	"build": {
 		"dockerfile": "Dockerfile"
 	},
@@ -17,15 +17,14 @@
 	"remoteEnv": {
 		"SPAWNCTL_ACCESS_TOKEN": "${localEnv:SPAWNCTL_ACCESS_TOKEN}"
 	},
-	"initializeCommand": [
-		"docker",
-		"run",
-		"--rm",
-		"-v",
-		"${localEnv:HOME}${localEnv:USERPROFILE}:/homedir",
-		"busybox",
-		"sh",
-		"-c",
-		"mkdir -p /homedir/.spawnctl/ && touch /homedir/.spawnctl/tokens.yaml"
+	"initializeCommand": "",
+	"onCreateCommand": [
+		"${containerWorkspaceFolder}/codespaces-start.sh"
 	],
+	"updateContentCommand": [
+		"${containerWorkspaceFolder}/codespaces-build.sh"
+	],
+	"postCreateCommand": "",
+	"postStartCommand": "",
+	"postAttachCommand": "",
 }
