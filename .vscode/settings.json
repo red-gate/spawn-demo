@@ -1,7 +1,15 @@
 {
-  "files.exclude": {
-  },
+  "files.exclude": {},
   "terminal.integrated.fontSize": 16,
   "editor.fontFamily": "Menlo, Monaco, 'Courier New', monospace",
-  "terminal.integrated.fontFamily": "Menlo, Monaco, 'Courier New', monospace"
+  "terminal.integrated.fontFamily": "Menlo, Monaco, 'Courier New', monospace",
+  "terminal.integrated.profiles.linux": {
+    "bash": {
+      "path": "/bin/bash"
+    },
+    "zsh": {
+      "path": "/bib/zsh"
+    },
+  },
+  "terminal.integrated.defaultProfile.linux": "bash"
 }
