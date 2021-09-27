@@ -12,9 +12,3 @@ RUN curl https://run.spawn.cc/install | sh && ln -s $HOME/.spawnctl/bin/spawnctl
 # Install Flyway
 RUN wget -qO- https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/7.0.2/flyway-commandline-7.0.2-linux-x64.tar.gz | \
  tar xvz && sudo ln -s `pwd`/flyway-7.0.2/flyway /usr/local/bin
-
-# And bash completion
-RUN apt update
-RUN apt install bash-completion
-RUN echo "source /etc/profile.d/bash_completion.sh" >> ~/.bashrc
-RUN echo "source <(spawnctl completion bash)" >> ~/.bashrc
