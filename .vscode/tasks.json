@@ -18,7 +18,16 @@
         "panel": "new",
         "showReuseMessage": true,
         "clear": true
-      }
+      },
+      "windows": {
+        "options": {
+          "shell": {
+            "executable": "powershell",
+            "args": ["-Command"]
+          }
+        },
+        "command": ". ${workspaceRoot}\\spawn.ps1; New-DataContainers; Sync-DatabasesWithMigrationScripts"
+      },
     },
     {
       "label":  "Build Backend .NET Api",

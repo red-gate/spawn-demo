@@ -1,3 +1,6 @@
+$env:SPAWN_ACCOUNT_IMAGE_NAME=demo-account:latest
+$env:SPAWN_TODO_IMAGE_NAME=demo-todo:latest
+
 function Get-GitBranchName {
   $branchName=((git rev-parse --abbrev-ref HEAD).Trim() -replace "\W")
   return $branchName
@@ -119,7 +122,7 @@ function New-DataContainers() {
   # if ($IsWindows -eq $false){
   #   Write-SpawnMessage -Exit $true "This powershell script can only be run on Windows."
   # }
-  
+
   $todoContainerName=(Get-DataContainerName "todo")
   $accountContainerName=(Get-DataContainerName "account")
 
