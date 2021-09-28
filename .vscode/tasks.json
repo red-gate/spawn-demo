@@ -20,26 +20,20 @@
     {
       "label":  "Build Backend .NET Api",
       "command": "dotnet",
-      "args": ["build"],
+      "args": ["build", "${workspaceRoot}/api/Spawn.Demo.WebApi"],
       "type": "process",
       "presentation": {
         "reveal": "silent",
         "focus": false,
         "panel": "shared",
         "showReuseMessage": false
-      },
-      "options": {
-        "cwd": "${workspaceRoot}/api/Spawn.Demo.WebApi"
       }
     },
     {
       "label": "Install frontend dependencies",
       "command": "yarn",
-      "args": ["install"],
-      "type": "process",
-      "options": {
-        "cwd": "${workspaceRoot}/client"
-      },
+      "args": ["--cwd", "${workspaceRoot}/client/", "install"],
+      "type": "shell",
       "presentation": {
         "reveal": "silent",
         "focus": false,
