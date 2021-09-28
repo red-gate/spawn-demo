@@ -28,9 +28,9 @@ function Write-FlywayMessage() {
     [bool]$Exit
   )
   if ($true -eq $exit) {
-    throw "📝  $message"
+    throw "$message"
   }
-  Write-Host -ForegroundColor Cyan "📝  $message"
+  Write-Host -ForegroundColor Cyan "$message"
 }
 
 function Assert-FlywayInstalled() {
