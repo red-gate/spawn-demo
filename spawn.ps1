@@ -1,5 +1,5 @@
-$env:SPAWN_ACCOUNT_IMAGE_NAME=demo-account:latest
-$env:SPAWN_TODO_IMAGE_NAME=demo-todo:latest
+$env:SPAWN_ACCOUNT_IMAGE_NAME="demo-account:latest"
+$env:SPAWN_TODO_IMAGE_NAME="demo-todo:latest"
 
 function Get-GitBranchName {
   $branchName=((git rev-parse --abbrev-ref HEAD).Trim() -replace "\W")
