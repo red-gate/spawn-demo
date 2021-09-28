@@ -22,7 +22,7 @@ param(
 $accountScriptsDir=(Join-Path $PSScriptRoot "/database/account/sql/")
 $todoScriptsDir=(Join-Path $PSScriptRoot "/database/todo/sql/")
 
-function Write-FlywayMessage {
+function Write-FlywayMessage() {
   param (
     [string]$Message,
     [bool]$Exit
@@ -33,21 +33,21 @@ function Write-FlywayMessage {
   Write-Host -ForegroundColor Cyan "📝  $message"
 }
 
-function Assert-FlywayInstalled {
+function Assert-FlywayInstalled() {
   if (Get-Command "flyway.exe" -ErrorAction SilentlyContinue) {
     return $true
   }
   return $false
 }
 
-function Assert-DockerInstalled {
+function Assert-DockerInstalled() {
   if (Get-Command "docker" -ErrorAction SilentlyContinue) {
     return $true
   }
   return $false
 }
 
-function Get-FlywayExecutable {
+function Get-FlywayExecutable() {
   param(
     [string]$scriptsPath
   )
