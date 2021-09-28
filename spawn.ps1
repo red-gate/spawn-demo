@@ -174,3 +174,6 @@ function Sync-DatabasesWithMigrationScripts {
 
   .\migrate-db.ps1 $todoHost $todoPort $todoUser $todoPassword $accountHost $accountPort $accountUser $accountPassword
 }
+
+New-DataContainers
+Sync-DatabasesWithMigrationScripts
