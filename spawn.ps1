@@ -47,12 +47,12 @@ function Assert-DataImagesExist() {
     Write-SpawnMessage -Exit $true "No spawn 'Account' database image specified in environment variable SPAWN_ACCOUNT_IMAGE_NAME. Please specify an image id."
   }
 
-  Invoke-Expression -Command "spawnctl get data-image $env:SPAWN_TODO_IMAGE_NAME 2>&1" | Out-Null
+  Invoke-Expression -Command "spawnctl.exe get data-image $env:SPAWN_TODO_IMAGE_NAME 2>&1" | Out-Null
   if ($LASTEXITCODE -ne 0) {
     Write-SpawnMessage -Exit $true "Could not find spawn image with id '$env:SPAWN_TODO_IMAGE_NAME'. Please ensure you have created the image."
   }
 
-  Invoke-Expression -Command "spawnctl get data-image $env:SPAWN_ACCOUNT_IMAGE_NAME 2>&1" | Out-Null
+  Invoke-Expression -Command "spawnctl.exe get data-image $env:SPAWN_ACCOUNT_IMAGE_NAME 2>&1" | Out-Null
   if ($LASTEXITCODE -ne 0) {
     Write-SpawnMessage -Exit $true "Could not find spawn image with id '$env:SPAWN_ACCOUNT_IMAGE_NAME'. Please ensure you have created the image."
   }
@@ -67,12 +67,12 @@ function Assert-DataContainersExist() {
   )
   Write-SpawnMessage "Checking if Spawn containers already exist"
 
-  Invoke-Expression -Command "spawnctl get data-container $TodoContainer 2>&1" | Out-Null
+  Invoke-Expression -Command "spawnctl.exe get data-container $TodoContainer 2>&1" | Out-Null
   if ($LASTEXITCODE -ne 0) {
     return $false
   }
   
-  Invoke-Expression -Command "spawnctl get data-container $AccountContainer 2>&1" | Out-Null
+  Invoke-Expression -Command "spawnctl.exe get data-container $AccountContainer 2>&1" | Out-Null
   if ($LASTEXITCODE -ne 0) {
     return $false
   }
@@ -92,8 +92,8 @@ function Edit-AppSettingsDatabaseConnectionStrings () {
   $appSettingsFilePath=(Join-Path $PSScriptRoot "/api/Spawn.Demo.WebApi/appsettings.Development.Database.json")
   Write-SpawnMessage "Updating '$appSettingsFilePath' with data container connection strings"
 
-  $todoContainerDetails=(Invoke-Expression -Command "spawnctl get data-container -o json $todoContainerName" | ConvertFrom-Json)
-  $accountContainerDetails=(Invoke-Expression -Command "spawnctl get data-container -o json $accountContainerName" | ConvertFrom-Json)
+  $todoContainerDetails=(Invoke-Expression -Command "spawnctl.exe get data-container -o json $todoContainerName" | ConvertFrom-Json)
+  $accountContainerDetails=(Invoke-Expression -Command "spawnctl.exe get data-container -o json $accountContainerName" | ConvertFrom-Json)
 
   $todoHost=$todoContainerDetails.Host
   $todoPort=$todoContainerDetails.Port
@@ -119,9 +119,9 @@ function Edit-AppSettingsDatabaseConnectionStrings () {
 }
 
 function New-DataContainers() {
-  # if ($IsWindows -eq $false){
-  #   Write-SpawnMessage -Exit $true "This powershell script can only be run on Windows."
-  # }
+  if ($IsWindows -eq $false){
+    Write-SpawnMessage -Exit $true "This powershell script can only be run on Windows."
+  }
 
   $todoContainerName=(Get-DataContainerName "todo")
   $accountContainerName=(Get-DataContainerName "account")
@@ -133,12 +133,12 @@ function New-DataContainers() {
     Write-Host
 
     Write-SpawnMessage "Creating 'Todo' Spawn container from image '$env:SPAWN_TODO_IMAGE_NAME'"
-    Invoke-Expression -Command "spawnctl create data-container --image $env:SPAWN_TODO_IMAGE_NAME --name '$todoContainerName' -q" | Out-Null
+    Invoke-Expression -Command "spawnctl.exe create data-container --image $env:SPAWN_TODO_IMAGE_NAME --name '$todoContainerName' -q" | Out-Null
     Write-SpawnMessage "Spawn 'Todo' container '$todoContainerName' created from image '$SPAWN_TODO_IMAGE_NAME'"
     Write-Host
 
     Write-SpawnMessage "Creating 'Account' Spawn container from image '$env:SPAWN_ACCOUNT_IMAGE_NAME'"
-    Invoke-Expression -Command "spawnctl create data-container --image $env:SPAWN_ACCOUNT_IMAGE_NAME --name '$accountContainerName' -q" | Out-Null
+    Invoke-Expression -Command "spawnctl.exe create data-container --image $env:SPAWN_ACCOUNT_IMAGE_NAME --name '$accountContainerName' -q" | Out-Null
     Write-SpawnMessage "Spawn 'Account' container '$accountContainerName' created from image '$SPAWN_ACCOUNT_IMAGE_NAME'"
     Write-Host
   }
@@ -152,15 +152,15 @@ function New-DataContainers() {
 }
 
 function Sync-DatabasesWithMigrationScripts {
-  # if ($IsWindows -eq $false){
-  #   Write-SpawnMessage -Exit $true "This powershell script can only be run on Windows."
-  # }
+  if ($IsWindows -eq $false){
+    Write-SpawnMessage -Exit $true "This powershell script can only be run on Windows."
+  }
 
   $todoContainerName=(Get-DataContainerName "todo")
   $accountContainerName=(Get-DataContainerName "account")
 
-  $todoContainerDetails=(Invoke-Expression -Command "spawnctl get data-container -o json $todoContainerName" | ConvertFrom-Json)
-  $accountContainerDetails=(Invoke-Expression -Command "spawnctl get data-container -o json $accountContainerName" | ConvertFrom-Json)
+  $todoContainerDetails=(Invoke-Expression -Command "spawnctl.exe get data-container -o json $todoContainerName" | ConvertFrom-Json)
+  $accountContainerDetails=(Invoke-Expression -Command "spawnctl.exe get data-container -o json $accountContainerName" | ConvertFrom-Json)
 
   $todoHost=$todoContainerDetails.Host
   $todoPort=$todoContainerDetails.Port
