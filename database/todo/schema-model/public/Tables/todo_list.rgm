@@ -1,0 +1,35 @@
+table "public"."todo_list" {
+  primaryKey = {
+    columns = [
+      "id"
+    ]
+    name = "todo_list_pkey"
+    objectType = primaryKey
+  }
+  columns = (
+    column "userid" {
+      type = character varying(70)
+    }
+    column "id" {
+      type = bigint
+      null = NOT NULL
+      default = nextval('public.todo_list_id_seq'::regclass)
+    }
+    column "createdat" {
+      type = timestamp without time zone
+      default = timezone('utc'::text, now())
+    }
+    column "task" {
+      type = text
+      null = NOT NULL
+    }
+    column "done" {
+      type = boolean
+      null = NOT NULL
+    }
+    column "projectid" {
+      type = integer
+    }
+  )
+}
+

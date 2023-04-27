@@ -1,0 +1,30 @@
+table "public"."projects" {
+  primaryKey = {
+    columns = [
+      "id"
+    ]
+    name = "projects_pkey"
+    objectType = primaryKey
+  }
+  columns = (
+    column "userid" {
+      type = character varying(70)
+    }
+    column "id" {
+      type = bigint
+      null = NOT NULL
+      default = nextval('public.projects_id_seq'::regclass)
+    }
+    column "createdat" {
+      type = timestamp without time zone
+      default = timezone('utc'::text, now())
+    }
+    column "name" {
+      type = character varying(255)
+    }
+    column "orgid" {
+      type = integer
+    }
+  )
+}
+

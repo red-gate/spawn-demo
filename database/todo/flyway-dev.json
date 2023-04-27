@@ -1,0 +1,17 @@
+{
+  "version": "2.0",
+  "name": "todo",
+  "id": "94852e6b-2042-4718-9f41-f429d1c4e156",
+  "databaseType": "PostgreSql",
+  "development": {
+    "scriptsFolder": "./schema-model"
+  },
+  "deployment": {
+    "flywayConfFiles": [
+      "./flyway.conf"
+    ]
+  },
+  "schemas": [
+    "public"
+  ]
+}
