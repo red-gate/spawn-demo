@@ -1,0 +1,9 @@
+CREATE TABLE "public"."todo_comment" (
+  "userid" varchar(70) COLLATE "pg_catalog"."default",
+  "id" int8 NOT NULL DEFAULT nextval('todo_list_id_seq'::regclass),
+  "createdat" timestamp(6) DEFAULT timezone('utc'::text, now()),
+  "taskid" int8 NOT NULL,
+  "comment" text NOT NULL,
+  CONSTRAINT "todo_comment_pkey" PRIMARY KEY ("id")
+)
+;
