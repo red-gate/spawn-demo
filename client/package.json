@@ -5,7 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^3.8.1",
     "@material-ui/icons": "^3.0.1",
-    "connected-react-router": "^6.0.0",
+    "connected-react-router": "^6.9.3",
     "moment": "^2.23.0",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
